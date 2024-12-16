@@ -1,17 +1,24 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+    <ion-buttons slot="start">
+      <img src="assets/icon/favicon.png" />
+      <ion-title id="title">TravelSync</ion-title>
+    </ion-buttons>
+  
+    <ion-buttons slot="end" class="responsive-icons">
+  
+      <ion-icon name="location-outline"></ion-icon>
+      <ion-select placeholder="Language" interface="popover">
+        <ion-select-option value="en">English</ion-select-option>
+        <ion-select-option value="es">Español</ion-select-option>
+        <ion-select-option value="fr">Français</ion-select-option>
+        <ion-select-option value="pt">Português</ion-select-option>
+      </ion-select>
+    </ion-buttons>  
+    
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
 </ion-content>

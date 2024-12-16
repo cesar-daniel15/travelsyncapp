@@ -1,0 +1,6 @@
+@use '../theme/variables' ;
+
+ion-app{
+    font-family: variables.$font-stack;
+    padding: 10px;
+}
