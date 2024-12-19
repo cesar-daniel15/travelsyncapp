@@ -25,3 +25,61 @@ ion-toolbar ion-buttons ion-icon{
     font-weight: bold;
     margin-right: 10px; 
 }
+  
+  /* Logo centralizada */
+  .logo {
+    display: block;
+    margin: 0 auto 16px;
+    width: 80px;
+    height: 80px;
+  }
+  
+  /* Títulos e subtítulos */
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+  }
+  
+  .subtitle {
+    text-align: center;
+    color: #7d7d7d;
+    margin-bottom: 16px;
+  }
+  
+  /* Links */
+  .register-link, .login-link {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: #1381C6;
+  }
+  
+  .register-link a, .login-link a {
+    color: #1381C6;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  /* Inputs */
+  ion-item {
+    --background: #F7F9FC;
+    --border-radius: 8px;
+    --border-width: 1px;
+    margin-bottom: 12px;
+  }
+  
+ /* Botão principal centralizado */
+.register-button {
+    --background: linear-gradient(to right, #1381C6, #1CAB7E); /* Gradiente azul e verde */
+    --color: #FFFFFF; /* Texto branco */
+    --border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    display: block; /* Garante que o botão seja tratado como um bloco */
+    margin: 16px auto; /* Centraliza horizontalmente */
+    width: 80%; /* Define uma largura apropriada */
+    text-align: center;
+  }
+  

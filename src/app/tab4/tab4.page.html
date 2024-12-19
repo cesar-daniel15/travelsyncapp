@@ -18,7 +18,37 @@
     
   </ion-toolbar>
 </ion-header>
+<ion-content class="ion-padding">
+  <div class="register-container">
 
-<ion-content [fullscreen]="true">
+    <h2 class="section-title">Crie sua conta</h2>
 
+    <ion-item>
+      <ion-icon slot="start" name="person-outline" color="medium"></ion-icon>
+      <ion-input placeholder="Nome"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="mail-outline" color="medium"></ion-icon>
+      <ion-input placeholder="Email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="lock-closed-outline" color="medium"></ion-icon>
+      <ion-input placeholder="Senha" type="password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="lock-closed-outline" color="medium"></ion-icon>
+      <ion-input placeholder="Confirmar Senha" type="password"></ion-input>
+    </ion-item>
+
+    <div class="ion-padding">
+      <ion-button class="register-button">Registrar</ion-button>
+    </div>
+
+    <p class="login-link">
+      Já tem uma conta? <a href="/login">Faça login aqui</a>.
+    </p>
+  </div>
 </ion-content>

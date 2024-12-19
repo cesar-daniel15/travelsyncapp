@@ -25,3 +25,95 @@ ion-toolbar ion-buttons ion-icon{
     font-weight: bold;
     margin-right: 10px; 
 }
+  
+  /* Geral */
+  ion-toolbar {
+    background-color: white;
+  }
+  
+  /* Botão de busca */
+  ion-searchbar {
+    margin: 16px 0;
+    --background: #f4f4f4;
+    --border-radius: 8px;
+  }
+
+/* Botão Delete */
+ion-button.delete-button {
+  --background: #6EC1E4; /* Azul claro */
+  --color: #FFFFFF; /* Letras brancas */
+}
+
+ion-button.delete-button:hover {
+  filter: brightness(95%);
+}
+
+
+  
+  /* Seção de favoritos */
+  .favorites-section {
+    display: grid; /* Usa CSS Grid */
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Garante colunas ajustáveis */
+    gap: 16px; /* Espaçamento entre os cards */
+    padding: 16px; /* Adiciona espaçamento interno */
+    justify-items: center; /* Centraliza os elementos */
+  }
+  
+  .favorite-card {
+    width: 100%; /* Ajusta a largura para preencher a coluna */
+    max-width: 200px; /* Define uma largura máxima para evitar distorções */
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .favorite-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+  }
+  
+  .favorite-card ion-card-content {
+    text-align: center;
+    padding: 8px;
+  }
+  
+  .favorite-card .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  
+  .favorite-card ion-button {
+    width: 48%; /* Garante que os botões fiquem alinhados */
+    font-size: 0.9rem;
+  }
+  
+  /* Seção do mapa */
+  .map-section {
+    margin: 16px;
+  }
+  
+  .map-container {
+    padding: 0;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .section-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 16px 0;
+    text-align: center;
+  }
+  
+  /* Estilo para o título das seções */
+  h2.section-title {
+    margin: 0 16px; /* Espaçamento à esquerda e direita */
+    font-size: 1.2rem; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito */
+    color: #7d7d7d; /* Cor mais clara (cinza suave) */
+    text-align: left; /* Alinha o texto à esquerda */
+  }
+  
+  
