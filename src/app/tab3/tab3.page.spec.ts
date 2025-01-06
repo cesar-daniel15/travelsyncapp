@@ -1,26 +1,27 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { Component } from '@angular/core';
 
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+@Component({
+  selector: 'app-favorite-trips',
+  templateUrl: './favorite-trips.page.html',
+  styleUrls: ['./favorite-trips.page.scss'],
+})
+export class FavoriteTripsPage {
+  lugaresFavoritos: string[] = [
+    'Praia de Copacabana',
+    'Monte Everest',
+    'Torre Eiffel',
+    'Grand Canyon'
+  ];
 
-import { Tab3Page } from './tab3.page';
+  constructor() {}
 
-describe('Tab3Page', () => {
-  let component: Tab3Page;
-  let fixture: ComponentFixture<Tab3Page>;
+  acao(lugar: string) {
+    console.log(`Ação para: ${lugar}`);
+    // Adicione a lógica para a ação aqui
+  }
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [Tab3Page],
-      imports: [IonicModule.forRoot(), ExploreContainerComponentModule]
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(Tab3Page);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  deletar(lugar: string) {
+    this.lugaresFavoritos = this.lugaresFavoritos.filter(l => l !== lugar);
+    console.log(`Deletado: ${lugar}`);
+  }
+}
