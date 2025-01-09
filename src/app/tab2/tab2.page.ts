@@ -7,6 +7,43 @@ import { locateOutline, calendarOutline, filterOutline, locationOutline, documen
 
 import { LanguageService } from '../services/language.service'; 
 import { TranslateModule } from '@ngx-translate/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LoadingController } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+
+enum State {
+  Planed = "Planed",
+  Starting ="Starting",
+  Finished = 'Finished',
+}
+
+enum Type {
+  Business ="Business",
+  Leisure = "Leisure",
+}
+
+interface Travels{ 
+  id: string; 
+  description: string; 
+  type: Type; 
+  state: State; 
+  map: null,
+  startAt: string | null,
+  endAt: null,
+  createdBy: string; 
+  createdAt: string; 
+  updatedBy: string | null; 
+  updatedAt: string;
+  // locations: TravelLocations;
+  // commets TravelComments;
+  // photos TravelPhotos;
+  prop1: string | null;
+  prop2: string;
+  prop3: string | null;
+  isFav: boolean;
+}
 
 addIcons({
   'locate-outline': locateOutline,
@@ -46,15 +83,94 @@ addIcons({
     TranslateModule 
   ]
 })
-export class RegisterPage {
-  showDatePicker: boolean = false;
 
-  toggleDatePicker() {
-    this.showDatePicker = !this.showDatePicker;
+export class RegisterPage {
+
+  apiUrl: string = "https://mobile-api-one.vercel.app/api";
+  name: string = "#";
+  password: string = "#";
+
+  selectedState: State = State.Planed;
+  selectedType: Type = Type.Business;
+  description: string = '';
+  isFav: boolean = false;
+  prop1: string = '';
+  prop2: string = '';
+
+  Type = Type; 
+  State = State;
+
+  constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService) {}
+  
+  async postTravel() {
+    const loading = await this.showLoading();
+    
+    if (this.prop1) {
+      this.prop1 = ' '; 
+    }else {
+      
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+    });
+
+    const startAt = this.selectedState === State.Starting ? new Date().toISOString() : null;
+  
+    const newTravel: Travels = {
+      id: '',
+      description: this.description,
+      type: this.selectedType,
+      state: this.selectedState,
+      map: null,
+      startAt: startAt,
+      endAt: null,
+      createdBy: this.name,
+      createdAt: new Date().toISOString(),
+      updatedBy: null,
+      updatedAt: new Date().toISOString(),
+      prop1: this.prop1,
+      prop2: this.prop2,
+      prop3: null,
+      isFav: this.isFav,
+    };
+  
+    try {
+      await firstValueFrom(this.http.post<Travels>(`${this.apiUrl}/travels`, newTravel, { headers }));
+      loading.dismiss();
+
+      await this.presentToast('TRAVEL_CREATED', 'success'); 
+
+    } catch (error: any) {
+      loading.dismiss();
+      
+      await this.presentToast('ERROR_OCCURRED', 'danger'); 
+    }
   }
 
-  constructor(private languageService: LanguageService) {}
-  
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading ...',
+      duration: 3000,
+    });
+
+    loading.present();
+    return loading;
+  }
+
+  async presentToast(messageKey: string, color: string = 'success') {
+    const message = await firstValueFrom(this.translate.get(messageKey)); 
+    const toast = document.createElement('ion-toast');
+
+    toast.message = message;  
+    toast.color = color;     
+    toast.duration = 2000;  
+    toast.position = 'top';
+    
+    document.body.appendChild(toast);  
+    await toast.present();
+  }
+
   switchLanguage(language: string) {
     this.languageService.setLanguage(language);
   }

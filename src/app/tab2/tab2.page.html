@@ -12,35 +12,42 @@
 <ion-content class="ion-padding">
   <div class="container">
 
+    <!-- Titulo -->
+    <ion-item class="title-item">
+      <ion-icon slot="start" name="document-text-outline" color="medium"></ion-icon>
+      <ion-input [(ngModel)]="prop2" placeholder="{{ 'Title' | translate }}"></ion-input>
+    </ion-item>
+
     <!-- Tipo -->
     <ion-item>
       <ion-icon slot="start" name="filter-outline" color="medium"></ion-icon>
-      <ion-select placeholder="{{ 'Type' | translate }}">
-        <ion-select-option value="type1">{{ 'Type1' | translate }}</ion-select-option>
-        <ion-select-option value="type2">{{ 'Type2' | translate }}</ion-select-option>
-      </ion-select>
+      <ion-select placeholder="{{ 'Type' | translate }}" [(ngModel)]="selectedType">
+        <ion-select-option [value]="Type.Business">{{ 'Type1' | translate }}</ion-select-option>
+        <ion-select-option [value]="Type.Leisure">{{ 'Type2' | translate }}</ion-select-option>
+      </ion-select> 
     </ion-item>
 
     <!-- Estado -->
     <ion-item>
       <ion-icon slot="start" name="timer-outline" color="medium"></ion-icon>
-      <ion-select placeholder="{{ 'State' | translate }}">
-        <ion-select-option value="state1">{{ 'State1' | translate }}</ion-select-option>
-        <ion-select-option value="state2">{{ 'State2' | translate }}</ion-select-option>
+      <ion-select placeholder="{{ 'State' | translate }}" [(ngModel)]="selectedState">
+        <ion-select-option [value]="State.Planed">{{ 'State1' | translate }}</ion-select-option>
+        <ion-select-option [value]="State.Starting">{{ 'State2' | translate }}</ion-select-option>
+        <ion-select-option [value]="State.Finished">{{ 'State3' | translate }}</ion-select-option>
       </ion-select>
     </ion-item>
 
     <!-- Descrição -->
-    <ion-item>
+    <ion-item class="description-item">
       <ion-icon slot="start" name="document-text-outline" color="medium"></ion-icon>
-      <ion-textarea placeholder="{{ 'Description' | translate }}"></ion-textarea>
+      <ion-input [(ngModel)]="description" placeholder="{{ 'Description' | translate }}"></ion-input>
     </ion-item>
 
     <!-- Gostar -->
     <ion-item>
       <ion-icon slot="start" name="heart-outline" color="medium"></ion-icon>
       <ion-label>{{ 'Like' | translate }}</ion-label>
-      <ion-checkbox slot="end" value="like"></ion-checkbox>
+      <ion-checkbox slot="end" value="like" [(ngModel)]="isFav"></ion-checkbox>
     </ion-item>
 
     <!-- Capa -->
@@ -54,7 +61,7 @@
 
     <!-- Botão Registrar -->
     <div class="ion-padding">
-      <ion-button expand="block" shape="round" size="large">{{ 'Register' | translate }}</ion-button>
+      <ion-button expand="block" shape="round" size="large" (click)="postTravel()">{{ 'Register' | translate }}</ion-button>
     </div>
 
   </div>
