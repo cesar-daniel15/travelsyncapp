@@ -27,26 +27,26 @@
     <ion-title id="liked" class="liked">{{ 'Liked' | translate }}</ion-title>
 
   </div>
-
-  <img src="https://i.pinimg.com/originals/b7/05/29/b7052995cf70b66dc99bc0dadae53219.jpg" alt="Image" class="liked-image">  
+  
+  <div class="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item" *ngFor="let travel of favoriteTravels">
+        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="liked-image">
+        <ion-icon name="heart" class="heart-icon"></ion-icon>
+      </div>
+    </div>
+  </div>
 
   <!-- Historic -->
   <div class="history-section">
 
     <ion-title id="historic" class="historic">{{ 'Historic' | translate }}</ion-title>
 
-      <div class="cards">
-
-      <div class="card">
-        <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/448684704.jpg?k=af823f6d5b53821e811a5c457783b660e17c4b0bd05036413d165fccc4b50210&o=&hp=1" alt="Image" class="card-image">
-        <h3 class="card-title">Aspen, USA</h3>
+    <div class="cards">
+      <div class="card" *ngFor="let travel of travels | slice:-4">
+        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="card-image">
+        <div class="card-title">{{ travel.prop2 }}</div>
       </div>
-
-      <div class="card">
-        <img src="https://www.polyglotgathering.com/2024/img/photos/prague2.jpg" alt="Image" class="card-image">
-        <h3 class="card-title">Prague, Czech</h3>
-      </div>
-
     </div>
 
   </div>
