@@ -26,17 +26,6 @@ ion-toolbar ion-buttons ion-icon{
     margin-right: 10px; 
 }
 
-ion-content ion-searchbar{
-    background-color: #F3F8FE; 
-    border-radius: 32px;
-    height: 40px; 
-    border: 1px solid #d1e3f8;
-    box-shadow: none; 
-    color: #B8B8B8;
-    padding: 10px;
-    margin-top: 50px; 
-}
-
 ion-content .liked-section{
     display: flex;
     justify-content: space-between;
@@ -49,15 +38,6 @@ ion-content .liked-section ion-title {
     font-size: 1.3rem; 
     color: variables.$text-color;
     font-weight: bold; 
-}
-
-ion-content #see-all {
-    font-size: 15px;
-    font-weight: normal;
-    color: variables.$text-color-secondary; 
-    cursor: pointer; 
-    text-align: right;
-    margin-left: auto;
 }
 
 ion-content .liked-image {

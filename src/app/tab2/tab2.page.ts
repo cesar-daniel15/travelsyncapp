@@ -1,36 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonSelect,
-  IonSelectOption,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonDatetime,
-  IonIcon,
-  IonTextarea,
-  IonButton,
-  IonImg
-} from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonSelect, IonSelectOption, IonItem, IonLabel, IonInput, IonDatetime, IonIcon, IonTextarea, IonButton,IonCheckbox, IonImg } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import {
-  locateOutline,
-  calendarOutline,
-  filterOutline,
-  locationOutline,
-  documentTextOutline,
-  gitBranchOutline,
-  heartOutline,
-  chatbubbleOutline
-} from 'ionicons/icons';
+import { locateOutline, calendarOutline, filterOutline, locationOutline, documentTextOutline, gitBranchOutline, heartOutline, chatbubbleOutline } from 'ionicons/icons';
 
-// Adicionando os ícones ao Ionicons
+import { LanguageService } from '../services/language.service'; 
+import { TranslateModule } from '@ngx-translate/core';
+
 addIcons({
   'locate-outline': locateOutline,
   'calendar-outline': calendarOutline,
@@ -44,9 +21,9 @@ addIcons({
 
 @Component({
   selector: 'app-tab2',
-  templateUrl: './tab2.page.html', // Verifique se esse arquivo existe
-  styleUrls: ['./tab2.page.scss'], // Verifique se esse arquivo existe
-  standalone: true, // Declara o componente como standalone
+  templateUrl: './tab2.page.html',
+  styleUrls: ['./tab2.page.scss'],
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -64,14 +41,25 @@ addIcons({
     IonIcon,
     IonTextarea,
     IonButton,
-    IonImg
+    IonImg,
+    IonCheckbox,
+    TranslateModule 
   ]
 })
 export class RegisterPage {
-
   showDatePicker: boolean = false;
 
   toggleDatePicker() {
     this.showDatePicker = !this.showDatePicker;
+  }
+
+  constructor(private languageService: LanguageService) {}
+  
+  switchLanguage(language: string) {
+    this.languageService.setLanguage(language);
+  }
+
+  getCurrentLanguage() {
+    return this.languageService.getLanguage();
   }
 }

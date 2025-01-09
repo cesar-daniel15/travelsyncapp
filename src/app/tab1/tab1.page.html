@@ -8,7 +8,7 @@
     <ion-buttons slot="end" class="responsive-icons">
   
       <ion-icon name="location-outline"></ion-icon>
-      <ion-select placeholder="Language" interface="popover">
+      <ion-select placeholder="Language" interface="popover" (ionChange)="switchLanguage($event.detail.value)">
         <ion-select-option value="en">English</ion-select-option>
         <ion-select-option value="es">Español</ion-select-option>
         <ion-select-option value="fr">Français</ion-select-option>
@@ -21,24 +21,19 @@
 
 <ion-content>
 
-  <!-- Barra -->
-  <ion-searchbar placeholder="Find things to do" class="search-bar" show-clear-button="focus"></ion-searchbar>
-
   <!-- Liked -->
   <div class="liked-section">
 
-    <ion-title id="liked" class="liked">Liked</ion-title>
+    <ion-title id="liked" class="liked">{{ 'Liked' | translate }}</ion-title>
 
-    <ion-title id="see-all" class="see-all">See All</ion-title>
-  
   </div>
 
   <img src="https://i.pinimg.com/originals/b7/05/29/b7052995cf70b66dc99bc0dadae53219.jpg" alt="Image" class="liked-image">  
 
-  <!-- History -->
+  <!-- Historic -->
   <div class="history-section">
 
-    <ion-title id="history" class="history">History</ion-title>
+    <ion-title id="historic" class="historic">{{ 'Historic' | translate }}</ion-title>
 
       <div class="cards">
 
