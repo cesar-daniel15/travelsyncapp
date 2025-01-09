@@ -1,0 +1,27 @@
+{
+    
+    "Search": "Search",
+    "Liked": "Liked",
+    "See All": "See All",
+    "Historic": "History",
+
+    "Title": "Title",
+    "Type": "Type",
+    "Type1": "Business",
+    "Type2": "Leisure",
+    "State": "State",
+    "State1": "Planed",
+    "State2": "Starting",
+    "State3": "Finished",
+    "Description": "Description",
+    "Like": "Favorite",
+    "Cover Photo": "Cover Photo",
+    "Register": "Register",
+
+    "NO_TRAVELS": "There are no travels available 😥",
+    "SUCESS_GETING": "Success getting {{count}} travels 🚀",
+
+    "TRAVEL_CREATED": "Travel successfully created 🚀",
+    "ERROR_OCCURRED": "An error occurred 🙁"
+
+}

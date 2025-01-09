@@ -1,0 +1,25 @@
+{
+    "Search": "Pesquisar",
+    "Liked": "Gostadas",
+    "See All": "Ver tudo",
+    "Historic": "Histórico",
+    
+    "Title": "Título",
+    "Type": "Tipo",
+    "Type1": "Negócios",
+    "Type2": "Lazer",
+    "State": "Estado",
+    "State1": "Planeada",
+    "State2": "A Iniciar",
+    "State3": "Finalizada",
+    "Description": "Descrição",
+    "Like": "Favorito",
+    "Cover Photo": "Foto de capa",
+    "Register": "Registrar",
+
+    "NO_TRAVELS": "Não há viagens disponíveis 😥",
+    "SUCESS_GETING": "Sucesso ao obter {{count}} viagens 🚀",
+
+    "TRAVEL_CREATED": "Viagem criada com sucesso 🚀",
+    "ERROR_OCCURRED": "Ocorreu um erro 🙁"
+}

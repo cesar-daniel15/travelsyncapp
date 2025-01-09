@@ -1,20 +1,10 @@
 <ion-header>
   <ion-toolbar>
+    
     <ion-buttons slot="start">
       <img src="assets/icon/favicon.png" />
       <ion-title id="title">TravelSync</ion-title>
     </ion-buttons>
-  
-    <ion-buttons slot="end" class="responsive-icons">
-  
-      <ion-icon name="location-outline"></ion-icon>
-      <ion-select placeholder="Language" interface="popover">
-        <ion-select-option value="en">English</ion-select-option>
-        <ion-select-option value="es">Español</ion-select-option>
-        <ion-select-option value="fr">Français</ion-select-option>
-        <ion-select-option value="pt">Português</ion-select-option>
-      </ion-select>
-    </ion-buttons>  
     
   </ion-toolbar>
 </ion-header>
@@ -22,78 +12,57 @@
 <ion-content class="ion-padding">
   <div class="container">
 
-    <!-- Localização -->
-    <ion-item>
-      <ion-icon slot="start" name="locate-outline" color="medium"></ion-icon>
-      <ion-input placeholder="Localização"></ion-input>
-    </ion-item>
-
-    <!-- Selecionar Data -->
-    <ion-item button (click)="toggleDatePicker()">
-      <ion-icon slot="start" name="calendar-outline" color="medium"></ion-icon>
-      <ion-label>Selecionar Data</ion-label>
-    </ion-item>
-
-    <!-- Campo de Data -->
-    <ion-item *ngIf="showDatePicker">
-      <ion-icon slot="start" name="calendar-outline" color="medium"></ion-icon>
-      <ion-datetime
-        presentation="date"
-        placeholder="Selecione a Data"
-        display-format="MMM DD, YYYY">
-      </ion-datetime>
+    <!-- Titulo -->
+    <ion-item class="title-item">
+      <ion-icon slot="start" name="document-text-outline" color="medium"></ion-icon>
+      <ion-input [(ngModel)]="prop2" placeholder="{{ 'Title' | translate }}"></ion-input>
     </ion-item>
 
     <!-- Tipo -->
     <ion-item>
       <ion-icon slot="start" name="filter-outline" color="medium"></ion-icon>
-      <ion-select placeholder="Tipo">
-        <ion-select-option value="type1">Opção 1</ion-select-option>
-        <ion-select-option value="type2">Opção 2</ion-select-option>
-      </ion-select>
+      <ion-select placeholder="{{ 'Type' | translate }}" [(ngModel)]="selectedType">
+        <ion-select-option [value]="Type.Business">{{ 'Type1' | translate }}</ion-select-option>
+        <ion-select-option [value]="Type.Leisure">{{ 'Type2' | translate }}</ion-select-option>
+      </ion-select> 
     </ion-item>
 
     <!-- Estado -->
     <ion-item>
-      <ion-icon slot="start" name="location-outline" color="medium"></ion-icon>
-      <ion-select placeholder="Estado">
-        <ion-select-option value="state1">Estado 1</ion-select-option>
-        <ion-select-option value="state2">Estado 2</ion-select-option>
+      <ion-icon slot="start" name="timer-outline" color="medium"></ion-icon>
+      <ion-select placeholder="{{ 'State' | translate }}" [(ngModel)]="selectedState">
+        <ion-select-option [value]="State.Planed">{{ 'State1' | translate }}</ion-select-option>
+        <ion-select-option [value]="State.Starting">{{ 'State2' | translate }}</ion-select-option>
+        <ion-select-option [value]="State.Finished">{{ 'State3' | translate }}</ion-select-option>
       </ion-select>
     </ion-item>
 
     <!-- Descrição -->
-    <ion-item>
+    <ion-item class="description-item">
       <ion-icon slot="start" name="document-text-outline" color="medium"></ion-icon>
-      <ion-textarea placeholder="Descrição"></ion-textarea>
-    </ion-item>
-
-    <!-- Dados Adicionais -->
-    <ion-item>
-      <ion-icon slot="start" name="git-branch-outline" color="medium"></ion-icon>
-      <ion-input placeholder="Dados Adicionais"></ion-input>
+      <ion-input [(ngModel)]="description" placeholder="{{ 'Description' | translate }}"></ion-input>
     </ion-item>
 
     <!-- Gostar -->
     <ion-item>
       <ion-icon slot="start" name="heart-outline" color="medium"></ion-icon>
-      <ion-select placeholder="Gostar">
-        <ion-select-option value="yes">Sim</ion-select-option>
-        <ion-select-option value="no">Não</ion-select-option>
-      </ion-select>
+      <ion-label>{{ 'Like' | translate }}</ion-label>
+      <ion-checkbox slot="end" value="like" [(ngModel)]="isFav"></ion-checkbox>
     </ion-item>
 
-    <!-- Comentários -->
+    <!-- Capa -->
     <ion-item>
-      <ion-icon slot="start" name="chatbubble-outline" color="medium"></ion-icon>
-      <ion-textarea placeholder="Comentários"></ion-textarea>
+      <ion-icon slot="start" name="image-outline" color="medium"></ion-icon>
+      <label for="cover-photo" class="custom-cover-photo">
+        {{ 'Cover Photo' | translate }}
+      </label>
+      <input id="cover-photo" type="file" accept="image/*" />
     </ion-item>
 
-   <!-- Botão Registrar -->
+    <!-- Botão Registrar -->
     <div class="ion-padding">
-      <ion-button expand="block" shape="round" size="large">Registrar</ion-button>
+      <ion-button expand="block" shape="round" size="large" (click)="postTravel()">{{ 'Register' | translate }}</ion-button>
     </div>
-
 
   </div>
 </ion-content>
