@@ -4,6 +4,7 @@
     "See All": "Ver todo",
     "Historic": "Histórico",
     
+    "Title": "Título",
     "Type": "Tipo",
     "Type1": "Negocios",
     "Type2": "Ocio",
@@ -15,6 +16,9 @@
     "Like": "Favorito",
     "Cover Photo": "Foto de portada",
     "Register": "Registrar",
+
+    "NO_TRAVELS": "No hay viajes disponibles 😥",
+    "SUCESS_GETING": "Éxito al obtener {{count}} viajes 🚀",
 
     "TRAVEL_CREATED": "Viaje creado con éxito 🚀",
     "ERROR_OCCURRED": "Ocurrió un error 🙁"
