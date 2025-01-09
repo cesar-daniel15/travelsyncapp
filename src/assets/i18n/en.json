@@ -6,13 +6,18 @@
     "Historic": "History",
 
     "Type": "Type",
-    "Type1": "Planned",
-    "Type2": "Starting",
+    "Type1": "Business",
+    "Type2": "Leisure",
     "State": "State",
-    "State1": "Business",
-    "State2": "Leisure",
+    "State1": "Planed",
+    "State2": "Starting",
+    "State3": "Finished",
     "Description": "Description",
     "Like": "Favorite",
     "Cover Photo": "Cover Photo",
-    "Register": "Register"
+    "Register": "Register",
+
+    "TRAVEL_CREATED": "Travel successfully created 🚀",
+    "ERROR_OCCURRED": "An error occurred 🙁"
+
 }

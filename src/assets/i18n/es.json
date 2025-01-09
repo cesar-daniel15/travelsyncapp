@@ -5,13 +5,17 @@
     "Historic": "Histórico",
     
     "Type": "Tipo",
-    "Type1": "Planeado",
-    "Type2": "Iniciando",
+    "Type1": "Negocios",
+    "Type2": "Ocio",
     "State": "Estado",
-    "State1": "Negocios",
-    "State2": "Ocio",
+    "State1": "Planeada",
+    "State2": "Comenzando",
+    "State3": "Finalizada",
     "Description": "Descripción",
     "Like": "Favorito",
     "Cover Photo": "Foto de portada",
-    "Register": "Registrar"
+    "Register": "Registrar",
+
+    "TRAVEL_CREATED": "Viaje creado con éxito 🚀",
+    "ERROR_OCCURRED": "Ocurrió un error 🙁"
 }
