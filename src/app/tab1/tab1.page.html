@@ -31,7 +31,7 @@
   <div class="carousel">
     <div class="carousel-inner">
       <div class="carousel-item" *ngFor="let travel of favoriteTravels">
-        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="liked-image">
+        <img [src]="travel.prop1" alt="Image" class="liked-image">
         <ion-icon name="heart" class="heart-icon"></ion-icon>
       </div>
     </div>
@@ -44,7 +44,7 @@
 
     <div class="cards">
       <div class="card" *ngFor="let travel of travels | slice:-4">
-        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="card-image">
+        <img [src]="travel.prop1" alt="Image" class="card-image">
         <div class="card-title">{{ travel.prop2 }}</div>
       </div>
     </div>
