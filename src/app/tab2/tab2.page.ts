@@ -100,40 +100,53 @@ export class RegisterPage {
   
   Type = Type; 
   State = State;
+
   
   constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService) {}
   
-  async uploadFile(event: any) {
-    const file = event.target.files[0];
+  async  uploadTestBlob() {
+    const { url } = await put('articles/blob.txt', 'Hello World!', { access: 'public' });
+    console.log('Blob URL:', url);
+  }
+
+  async uploadFile(event: Event) {
+    const input = event.target as HTMLInputElement; // Cast para HTMLInputElement
+    const file = input.files?.[0]; // Obtém o primeiro arquivo
+  
+    if (!file) {
+      console.error('Nenhum arquivo selecionado.');
+      return; // Retorna se não houver arquivo
+    }
+  
     const formData = new FormData();
     formData.append('file', file);
   
-    try {
-      const response: any = await this.http.post('https://nyyibhcas6qkwcz8.public.blob.vercel-storage.com/upload', formData, {
-        headers: {
-          'Accept': 'application/json',
-        },
-        observe: 'response' // Para obter o status da resposta
-      }).toPromise();
-  
-      if (response.status === 200) {
-        this.prop1 = response.body.url; // Armazena a URL do blob na prop1
-        console.log('URL do Blob:', this.prop1);
-      } else {
-        console.error('Erro ao fazer upload:', response);
+    this.http.post('https://nyyibhcas6qkwcz8.public.blob.vercel-storage.com/upload', formData, {
+      headers: {
+        'Accept': 'application/json',
+      },
+      observe: 'response' // Para obter o status da resposta
+    }).subscribe({
+      next: (response) => {
+        console.log('Upload bem-sucedido:', response);
+        
+        // Verifica se response.body não é null
+        if (response.body && (response.body as any).url) { // Cast para 'any' para acessar a URL
+          this.prop1 = (response.body as any).url; // Armazena a URL na propriedade prop1
+        } else {
+          console.error('A resposta não contém a URL do blob.');
+        }
+      },
+      error: (error) => {
+        console.error('Erro ao fazer upload:', error);
       }
-    } catch (error) {
-      console.error('Erro ao fazer upload:', error);
-    }
+    });
   }
+  
   async postTravel() {
-    const loading = await this.showLoading();
+    await this.uploadTestBlob();
     
-    if (this.prop1) {
-      this.prop1 = ' '; 
-    }else {
-      
-    }
+    const loading = await this.showLoading();
 
     const headers = new HttpHeaders({
       Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
