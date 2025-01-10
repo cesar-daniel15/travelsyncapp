@@ -104,48 +104,11 @@ export class RegisterPage {
   
   constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService) {}
   
-  async  uploadTestBlob() {
-    const { url } = await put('articles/blob.txt', 'Hello World!', { access: 'public' });
-    console.log('Blob URL:', url);
-  }
-
-  async uploadFile(event: Event) {
-    const input = event.target as HTMLInputElement; // Cast para HTMLInputElement
-    const file = input.files?.[0]; // Obtém o primeiro arquivo
-  
-    if (!file) {
-      console.error('Nenhum arquivo selecionado.');
-      return; // Retorna se não houver arquivo
-    }
-  
-    const formData = new FormData();
-    formData.append('file', file);
-  
-    this.http.post('https://nyyibhcas6qkwcz8.public.blob.vercel-storage.com/upload', formData, {
-      headers: {
-        'Accept': 'application/json',
-      },
-      observe: 'response' // Para obter o status da resposta
-    }).subscribe({
-      next: (response) => {
-        console.log('Upload bem-sucedido:', response);
-        
-        // Verifica se response.body não é null
-        if (response.body && (response.body as any).url) { // Cast para 'any' para acessar a URL
-          this.prop1 = (response.body as any).url; // Armazena a URL na propriedade prop1
-        } else {
-          console.error('A resposta não contém a URL do blob.');
-        }
-      },
-      error: (error) => {
-        console.error('Erro ao fazer upload:', error);
-      }
-    });
-  }
   
   async postTravel() {
-    await this.uploadTestBlob();
-    
+
+    const { url } = await put('articles/blob.txt', 'Hello World!', { access: 'public' });
+
     const loading = await this.showLoading();
 
     const headers = new HttpHeaders({
