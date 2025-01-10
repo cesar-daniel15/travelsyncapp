@@ -100,33 +100,23 @@ export class RegisterPage {
   
   Type = Type; 
   State = State;
-
+  
   constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService) {}
   
+  async uploadFile(event: any) {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
   
-  async onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-  
-      if (!file.type.startsWith('image/')) {
-        console.error('Por favor, selecione um arquivo de imagem.');
-        return;
-      }
-  
-      try {
-        console.log('Fazendo upload do arquivo:', file.name);
-        const { url } = await put(`uploads/${file.name}`, file, { access: 'public' });
-        this.prop1 = url;
-        console.log('Imagem carregada com sucesso:', url);
-      } catch (error) {
-        console.error('Erro ao carregar a imagem:', error);
-      }
-    } else {
-      console.error('Nenhum arquivo selecionado.');
+    try {
+      const response: any = await this.http.post('https://nyyibhcas6qkwcz8.public.blob.vercel-storage.com/upload', formData).toPromise();
+      this.prop1 = response.url; // Armazena a URL do blob na prop1
+      console.log('URL do Blob:', this.prop1);
+    } catch (error) {
+      console.error('Erro ao fazer upload:', error);
     }
   }
-
+  
   async postTravel() {
     const loading = await this.showLoading();
     
