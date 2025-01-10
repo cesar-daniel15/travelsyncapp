@@ -18,12 +18,12 @@ enum Type {
 
 interface Travels {
   id: string;
-  description: string;
-  type: Type;
-  state: State;
+  description: string | null;
+  type: Type | null;
+  state: State | null;
   map: null;
   startAt: string | null;
-  endAt: null;
+  endAt: string | null;
   createdBy: string;
   createdAt: string;
   updatedBy: string | null;
@@ -31,6 +31,10 @@ interface Travels {
   prop1: string | null;
   prop2: string | null;
   isFav: boolean;
+}
+
+function isValidType(type: any): type is Type {
+  return type === Type.Business || type === Type.Leisure;
 }
 
 @Component({
@@ -43,10 +47,17 @@ export class Tab4Page implements OnInit {
   name: string = "rubenbenedito@ipvc.pt";
   password: string = "K6$yTp2Q";
 
+  type: Type | null = null;
+  state: State | null = null;
+  description: string | null = null;
   travels: Travels[] = [];
   selectedTravel: Travels | null = null;
   isModalOpen: boolean = false;
-  isFav: boolean = false;  // Variável auxiliar para controlar o checkbox
+  isFav: boolean = false;
+
+  startAt: string | null = null;
+  endAt: string | null = null;
+  minDate: string = new Date().toISOString(); // Para garantir que a data mínima seja a data atual
 
   constructor(
     private languageService: LanguageService,
@@ -67,19 +78,31 @@ export class Tab4Page implements OnInit {
     });
 
     try {
-      this.travels = await firstValueFrom(
-        this.http.get<Travels[]>(`${this.apiUrl}/travels`, { headers })
+      const response = await firstValueFrom(
+        this.http.get<any[]>(`${this.apiUrl}/travels`, { headers })
       );
+
+      this.travels = response.map(travel => ({
+        ...travel,
+        type: isValidType(travel.type) ? travel.type : null,
+        state: travel.state ? travel.state : null,
+      }));
+
       loading.dismiss();
     } catch (error: any) {
       loading.dismiss();
-      await this.presentToast(error.error, 'danger');
+      await this.presentToast(error.error || 'Error fetching data', 'danger');
     }
   }
 
   openTravelDetails(travel: Travels) {
     this.selectedTravel = travel;
-    this.isFav = travel.isFav;  // Inicializa o estado do checkbox
+    this.type = travel.type;
+    this.state = travel.state;
+    this.description = travel.description;
+    this.isFav = travel.isFav;
+    this.startAt = travel.startAt;
+    this.endAt = travel.endAt;
     this.isModalOpen = true;
   }
 
@@ -90,7 +113,6 @@ export class Tab4Page implements OnInit {
 
   async deleteTravel(travelId: string | null) {
     if (!travelId) return;
-
     const loading = await this.showLoading();
 
     const headers = new HttpHeaders({
@@ -109,6 +131,78 @@ export class Tab4Page implements OnInit {
       loading.dismiss();
       await this.presentToast('Failed to delete travel.', 'danger');
     }
+  }
+
+  // Função para salvar as alterações
+  async saveChanges() {
+    if (!this.selectedTravel) return;
+
+    // Se o status for 'Starting' e não tiver startAt, preenche com a data atual de criação
+    if (this.state === State.Starting && !this.startAt) {
+      this.startAt = new Date().toISOString();
+    }
+
+    // Se o status for 'Finished' e não tiver endAt, preenche com a data de atualização
+    if (this.state === State.Finished && !this.endAt) {
+      this.endAt = new Date().toISOString();
+    }
+
+    if (!this.type || !this.state || !this.description) {
+      await this.presentToast('All fields must be filled out.', 'danger');
+      return;
+    }
+
+    const loading = await this.showLoading();
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+    });
+
+    try {
+      const updatedTravel = {
+        ...this.selectedTravel,
+        type: this.type,
+        state: this.state,
+        description: this.description,
+        isFav: this.isFav,
+        startAt: this.startAt,
+        endAt: this.endAt,
+      };
+
+      const response = await firstValueFrom(
+        this.http.put(`${this.apiUrl}/travels/${this.selectedTravel.id}`, updatedTravel, { headers })
+      );
+
+      this.travels = this.travels.map(travel =>
+        travel.id === this.selectedTravel?.id ? updatedTravel : travel
+      );
+
+      loading.dismiss();
+      this.isModalOpen = false;
+      this.selectedTravel = null;
+      await this.presentToast('Changes saved successfully.', 'success');
+    } catch (error: any) {
+      loading.dismiss();
+      await this.presentToast('Failed to save changes.', 'danger');
+    }
+  }
+
+  onStateChange() {
+    // Lógica para atualizar as datas com base no estado
+    if (this.state === State.Starting && !this.startAt) {
+      this.startAt = new Date().toISOString();  // Definir startAt para a data atual
+    }
+
+    if (this.state === State.Finished && !this.endAt) {
+      this.endAt = new Date().toISOString();  // Definir endAt para a data atual
+    }
+  }
+
+  onFavChange(event: CustomEvent) {
+    this.isFav = event.detail.value;
+  }
+
+  cancelChanges() {
+    this.closeModal();
   }
 
   async showLoading() {
@@ -139,64 +233,4 @@ export class Tab4Page implements OnInit {
   getCurrentLanguage() {
     return this.languageService.getLanguage();
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// mal
-async saveChanges() {
-  if (!this.selectedTravel) return;
-
-  const loading = await this.showLoading();
-
-  const headers = new HttpHeaders({
-    Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
-  });
-
-  try {
-    const updatedTravel = {
-      ...this.selectedTravel,
-      isFav: this.isFav, // Atualiza o valor de isFav antes de salvar
-    };
-
-    // Envia a solicitação PUT para salvar as mudanças
-    await firstValueFrom(
-      this.http.put(`${this.apiUrl}/travels/${this.selectedTravel.id}`, updatedTravel, { headers })
-    );
-
-    // Atualiza a lista local de viagens com os novos dados
-    this.travels = this.travels.map(travel =>
-      travel.id === this.selectedTravel?.id ? updatedTravel : travel
-    );
-
-    loading.dismiss();
-    this.isModalOpen = false;
-    await this.presentToast('Changes saved successfully.', 'success');
-  } catch (error: any) {
-    loading.dismiss();
-    await this.presentToast('Failed to save changes.', 'danger');
-  }
-}
-
-  onFavChange(event: any) {
-    this.isFav = event.detail.checked; // Atualiza o estado de isFav ao alterar o checkbox
-  }
-
-  
-  cancelChanges() {
-    console.log('Changes discarded');
-    this.closeModal();  // Fechar o modal sem salvar as mudanças
-  }
-
-
 }
