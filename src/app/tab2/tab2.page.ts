@@ -12,6 +12,7 @@ import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { put } from "@vercel/blob";
 
 enum State {
   Planed = "Planed",
@@ -96,12 +97,36 @@ export class RegisterPage {
   isFav: boolean = false;
   prop1: string = '';
   prop2: string = '';
-
+  
   Type = Type; 
   State = State;
 
   constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService) {}
   
+  
+  async onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+  
+      if (!file.type.startsWith('image/')) {
+        console.error('Por favor, selecione um arquivo de imagem.');
+        return;
+      }
+  
+      try {
+        console.log('Fazendo upload do arquivo:', file.name);
+        const { url } = await put(`uploads/${file.name}`, file, { access: 'public' });
+        this.prop1 = url;
+        console.log('Imagem carregada com sucesso:', url);
+      } catch (error) {
+        console.error('Erro ao carregar a imagem:', error);
+      }
+    } else {
+      console.error('Nenhum arquivo selecionado.');
+    }
+  }
+
   async postTravel() {
     const loading = await this.showLoading();
     
