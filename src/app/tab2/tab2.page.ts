@@ -109,14 +109,23 @@ export class RegisterPage {
     formData.append('file', file);
   
     try {
-      const response: any = await this.http.post('https://nyyibhcas6qkwcz8.public.blob.vercel-storage.com/upload', formData).toPromise();
-      this.prop1 = response.url; // Armazena a URL do blob na prop1
-      console.log('URL do Blob:', this.prop1);
+      const response: any = await this.http.post('https://nyyibhcas6qkwcz8.public.blob.vercel-storage.com/upload', formData, {
+        headers: {
+          'Accept': 'application/json',
+        },
+        observe: 'response' // Para obter o status da resposta
+      }).toPromise();
+  
+      if (response.status === 200) {
+        this.prop1 = response.body.url; // Armazena a URL do blob na prop1
+        console.log('URL do Blob:', this.prop1);
+      } else {
+        console.error('Erro ao fazer upload:', response);
+      }
     } catch (error) {
       console.error('Erro ao fazer upload:', error);
     }
   }
-  
   async postTravel() {
     const loading = await this.showLoading();
     
