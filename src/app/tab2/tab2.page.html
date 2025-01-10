@@ -56,7 +56,8 @@
       <label for="cover-photo" class="custom-cover-photo">
         {{ 'Cover Photo' | translate }}
       </label>
-      <input id="cover-photo" type="file" accept="image/*" />
+      <input id="cover-photo" type="file" accept="image/*" (change)="handleImageUpload($event)"  />
+      <img *ngIf="prop1" [src]="prop1" alt="Uploaded Image" />
     </ion-item>
 
     <!-- Botão Registrar -->
