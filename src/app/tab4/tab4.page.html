@@ -1,38 +1,86 @@
 <ion-header>
   <ion-toolbar>
-    
     <ion-buttons slot="start">
       <img src="assets/icon/favicon.png" />
       <ion-title id="title">TravelSync</ion-title>
     </ion-buttons>
-    
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-  <!-- Barra -->
+  <!-- Search Bar -->
   <ion-searchbar placeholder="Search Travels" class="search-bar" show-clear-button="focus"></ion-searchbar>
 
-  <!-- Historic -->
+  <!-- Historic Section -->
   <div class="historic-section">
-
     <ion-title id="historic" class="historic">{{ 'Historic' | translate }}</ion-title>
 
-      <div class="cards">
-
-      <div class="card">
-        <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/448684704.jpg?k=af823f6d5b53821e811a5c457783b660e17c4b0bd05036413d165fccc4b50210&o=&hp=1" alt="Image" class="card-image">
-        <h3 class="card-title">Aspen, USA</h3>
+    <div class="cards">
+      <div class="card" *ngFor="let travel of travels | slice:-4" (click)="openTravelDetails(travel)">
+        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="card-image">
+        <div class="card-title">{{ travel.prop2 }}</div>
       </div>
-
-      <div class="card">
-        <img src="https://www.polyglotgathering.com/2024/img/photos/prague2.jpg" alt="Image" class="card-image">
-        <h3 class="card-title">Prague, Czech</h3>
-      </div>
-
     </div>
-
   </div>
-  
 </ion-content>
+
+<!-- Modal -->
+<ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ selectedTravel?.description }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button color="danger" (click)="deleteTravel(selectedTravel?.id ?? null)">
+            <ion-icon slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Type:</ion-label>
+          <ion-text>{{ selectedTravel?.type }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>State:</ion-label>
+          <ion-text>{{ selectedTravel?.state }}</ion-text>
+        </ion-item>
+        
+        <!-- Verifique se selectedTravel é válido antes de mostrar o checkbox -->
+        <ion-item *ngIf="selectedTravel">
+          <ion-label>Is Fav:</ion-label>
+          <ion-checkbox [(ngModel)]="isFav" (ionChange)="onFavChange($event)"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Start At:</ion-label>
+          <ion-text>{{ selectedTravel?.startAt }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>End At:</ion-label>
+          <ion-text>{{ selectedTravel?.endAt }}</ion-text>
+        </ion-item>
+        <ion-item>
+          <ion-label>Description:</ion-label>
+          <ion-text>{{ selectedTravel?.description }}</ion-text>
+        </ion-item>
+      </ion-list>
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-row>
+            <ion-col size="6">
+              <ion-button expand="block" color="success" (click)="saveChanges()">Save</ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button expand="block" color="medium" (click)="cancelChanges()">Cancel</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-content>
+  </ng-template>
+</ion-modal>
