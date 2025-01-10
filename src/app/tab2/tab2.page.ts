@@ -104,10 +104,31 @@ export class RegisterPage {
   
   constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService) {}
   
-  
-  async postTravel() {
+  async uploadImage(file: File): Promise<string> {
+    try {
+      const blob = await put('uploads/image.jpg', file, { token: 'vercel_blob_rw_NYYibHcAS6qkWcz8_X9XcAX5v1ivmRbzVNkCzeezfKEsN20', access: 'public' });
+      return blob.url; 
+    } catch (error) {
+      console.error('Erro no upload da imagem:', error);
+      throw new Error('Falha ao fazer upload da imagem');
+    }
+}
 
-    const { url } = await put('articles/blob.txt', 'Hello World!', { access: 'public' });
+async handleImageUpload(event: Event): Promise<void> {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0]; // Obtém o arquivo da imagem
+  if (file) {
+    try {
+      const imageUrl = await this.uploadImage(file); // Faz o upload e obtém a URL
+      this.prop1 = imageUrl; // Armazena a URL na prop1
+    } catch (error) {
+      console.error('Erro ao fazer upload da imagem:', error);
+      await this.presentToast('UPLOAD_FAILED', 'danger'); // Mensagem de erro
+    }
+  }
+}
+
+  async postTravel() {
 
     const loading = await this.showLoading();
 
