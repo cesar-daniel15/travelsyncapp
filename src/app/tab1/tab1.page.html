@@ -24,31 +24,49 @@
   <!-- Liked -->
   <div class="liked-section">
 
-    <ion-title id="liked" class="liked">{{ 'Liked' | translate }}</ion-title>
+    <ion-title id="liked" class="liked">{{ 'Favorites' | translate }}</ion-title>
 
   </div>
   
   <div class="carousel">
     <div class="carousel-inner">
       <div class="carousel-item" *ngFor="let travel of favoriteTravels">
-        <img [src]="travel.prop1" alt="Image" class="liked-image">
+        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="liked-image">
         <ion-icon name="heart" class="heart-icon"></ion-icon>
       </div>
     </div>
   </div>
 
-  <!-- Historic -->
-  <div class="history-section">
+  <!-- Starting Travels -->
+  <div class="history-section" *ngIf="startingTravels.length > 0">
 
-    <ion-title id="historic" class="historic">{{ 'Historic' | translate }}</ion-title>
+    <ion-title id="historic" class="historic">{{ 'Already Started' | translate }}</ion-title>
 
     <div class="cards">
-      <div class="card" *ngFor="let travel of travels | slice:-4">
-        <img [src]="travel.prop1" alt="Image" class="card-image">
+      <div class="card" *ngFor="let travel of startingTravels">
+        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="card-image">
         <div class="card-title">{{ travel.prop2 }}</div>
       </div>
     </div>
 
+  </div>
+
+  <!-- To Start -->
+  <div class="history-section" *ngIf="plannedTravels.length > 0">
+
+    <ion-title id="historic" class="historic">{{ 'To Start' | translate }}</ion-title>
+
+    <div class="cards">
+      <div class="card" *ngFor="let travel of plannedTravels">
+        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="card-image">
+        <div class="card-title">{{ travel.prop2 }}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="startingTravels.length === 0 && plannedTravels.length === 0">
+    <ion-title class="no-travels">{{ 'No Registered Trips' | translate }}</ion-title>
   </div>
   
 </ion-content>
