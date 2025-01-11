@@ -13,6 +13,7 @@ import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { put } from "@vercel/blob";
+import { Router } from '@angular/router';
 
 enum State {
   Planed = "Planed",
@@ -92,7 +93,7 @@ export class RegisterPage {
   password: string = "uVt(D!u3";
 
   selectedState: State = State.Planed;
-  selectedType: Type = Type.Business;
+  selectedType: Type = Type.Leisure;
   description: string = '';
   isFav: boolean = false;
   prop1: string = '';
@@ -102,31 +103,38 @@ export class RegisterPage {
   State = State;
 
   
-  constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService) {}
+  constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService,   private router: Router) {}
   
   async uploadImage(file: File): Promise<string> {
+    
     try {
+
       const blob = await put('uploads/image.jpg', file, { token: 'vercel_blob_rw_NYYibHcAS6qkWcz8_X9XcAX5v1ivmRbzVNkCzeezfKEsN20', access: 'public' });
       return blob.url; 
+
     } catch (error) {
-      console.error('Erro no upload da imagem:', error);
-      throw new Error('Falha ao fazer upload da imagem');
+
+      throw new Error('Error to uploading image');
     }
 }
 
-async handleImageUpload(event: Event): Promise<void> {
-  const input = event.target as HTMLInputElement;
-  const file = input.files?.[0]; // Obtém o arquivo da imagem
-  if (file) {
-    try {
-      const imageUrl = await this.uploadImage(file); // Faz o upload e obtém a URL
-      this.prop1 = imageUrl; // Armazena a URL na prop1
-    } catch (error) {
-      console.error('Erro ao fazer upload da imagem:', error);
-      await this.presentToast('UPLOAD_FAILED', 'danger'); // Mensagem de erro
+  async handleImageUpload(event: Event): Promise<void> {
+
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0]; 
+
+    if (file) {
+      try {
+
+        const imageUrl = await this.uploadImage(file); 
+        this.prop1 = imageUrl; 
+
+      } catch (error) {
+
+        await this.presentToast('UPLOAD_FAILED', 'danger'); 
+      }
     }
   }
-}
 
   async postTravel() {
 
@@ -155,12 +163,21 @@ async handleImageUpload(event: Event): Promise<void> {
       prop3: null,
       isFav: this.isFav,
     };
-  
+    
     try {
+
       await firstValueFrom(this.http.post<Travels>(`${this.apiUrl}/travels`, newTravel, { headers }));
       loading.dismiss();
+      
+      if (newTravel.state === State.Starting) {
+        newTravel.startAt = new Date().toISOString(); 
+      }
 
       await this.presentToast('TRAVEL_CREATED', 'success'); 
+
+      this.router.navigate(['/home']).then(() => {
+        window.location.reload(); 
+      });
 
     } catch (error: any) {
       loading.dismiss();
