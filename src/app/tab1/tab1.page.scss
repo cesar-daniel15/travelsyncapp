@@ -60,7 +60,7 @@ ion-content .liked-section{
     display: flex;
     justify-content: space-between;
     align-items: center; 
-    margin-top: 50px; 
+    margin-top: 25px; 
     margin-bottom: 25px;
 }
 
@@ -82,7 +82,7 @@ ion-content .history-section ion-title {
     font-size: 1.3rem; 
     color: variables.$text-color;
     font-weight: bold; 
-    margin-top: 50px; 
+    margin-top: 25px; 
     margin-bottom: 25px;
 }
 
@@ -113,8 +113,8 @@ ion-content .history-section ion-title {
 }
 
 .history-section .card-image {
-    width: 100%; 
-    height: auto; 
+    width: 180px;
+    height: 200px;
     border-radius: 25px; 
 }
 
@@ -122,4 +122,5 @@ ion-content .history-section ion-title {
     font-size: 15px; 
     color: variables.$text-color; 
     margin-top: 5px; 
+    margin-bottom: 5px; 
 }

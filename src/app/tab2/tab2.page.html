@@ -15,15 +15,15 @@
     <!-- Titulo -->
     <ion-item class="title-item">
       <ion-icon slot="start" name="document-text-outline" color="medium"></ion-icon>
-      <ion-input [(ngModel)]="prop2" placeholder="{{ 'Title' | translate }}"></ion-input>
+      <ion-input [(ngModel)]="prop2" placeholder="{{ 'Country' | translate }}"></ion-input>
     </ion-item>
 
     <!-- Tipo -->
     <ion-item>
       <ion-icon slot="start" name="filter-outline" color="medium"></ion-icon>
       <ion-select placeholder="{{ 'Type' | translate }}" [(ngModel)]="selectedType">
-        <ion-select-option [value]="Type.Business">{{ 'Type1' | translate }}</ion-select-option>
         <ion-select-option [value]="Type.Leisure">{{ 'Type2' | translate }}</ion-select-option>
+        <ion-select-option [value]="Type.Business">{{ 'Type1' | translate }}</ion-select-option>
       </ion-select> 
     </ion-item>
 
@@ -33,7 +33,7 @@
       <ion-select placeholder="{{ 'State' | translate }}" [(ngModel)]="selectedState">
         <ion-select-option [value]="State.Planed">{{ 'State1' | translate }}</ion-select-option>
         <ion-select-option [value]="State.Starting">{{ 'State2' | translate }}</ion-select-option>
-        <ion-select-option [value]="State.Finished">{{ 'State3' | translate }}</ion-select-option>
+        <!-- <ion-select-option [value]="State.Finished">{{ 'State3' | translate }}</ion-select-option> -->
       </ion-select>
     </ion-item>
 
@@ -56,7 +56,7 @@
       <label for="cover-photo" class="custom-cover-photo">
         {{ 'Cover Photo' | translate }}
       </label>
-      <input id="cover-photo" type="file" accept="image/*" />
+      <input id="cover-photo" type="file" accept="image/*" (change)="handleImageUpload($event)"  />
     </ion-item>
 
     <!-- Botão Registrar -->

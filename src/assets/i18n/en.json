@@ -1,11 +1,13 @@
 {
     
     "Search": "Search",
-    "Liked": "Liked",
+    "Favorites": "Favorites",
     "See All": "See All",
-    "Historic": "History",
+    "Already Started" : "Already Started",
+    "To Start": "To Start",
+    "No Registered Trips": "No Registered Trips 🙁",
 
-    "Title": "Title",
+    "Country": "Country",
     "Type": "Type",
     "Type1": "Business",
     "Type2": "Leisure",

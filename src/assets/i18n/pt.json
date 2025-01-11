@@ -1,10 +1,12 @@
 {
     "Search": "Pesquisar",
-    "Liked": "Gostadas",
+    "Favorites": "Favoritas",
     "See All": "Ver tudo",
-    "Historic": "Histórico",
-    
-    "Title": "Título",
+    "Already Started" : "Já Iniciadas",
+    "To Start": "Por Começar",
+    "No Registered Trips": "Nenhuma viagem registada 🙁",
+
+    "Country": "País",
     "Type": "Tipo",
     "Type1": "Negócios",
     "Type2": "Lazer",
