@@ -51,13 +51,15 @@ export class Tab4Page implements OnInit {
   state: State | null = null;
   description: string | null = null;
   travels: Travels[] = [];
+  filteredTravels: Travels[] = []; // Lista filtrada
   selectedTravel: Travels | null = null;
   isModalOpen: boolean = false;
   isFav: boolean = false;
 
   startAt: string | null = null;
   endAt: string | null = null;
-  minDate: string = new Date().toISOString(); // Para garantir que a data mínima seja a data atual
+  minDate: string = new Date().toISOString(); // Garantir que a data mínima seja a data atual
+  searchQuery: string = ''; // Variável para armazenar o valor da pesquisa
 
   constructor(
     private languageService: LanguageService,
@@ -68,6 +70,15 @@ export class Tab4Page implements OnInit {
 
   ngOnInit() {
     this.getTravels();
+  }
+
+  // Função para formatar a data no formato "DD/MM/YYYY"
+  formatDate(date: string): string {
+    const formattedDate = new Date(date);
+    const day = String(formattedDate.getDate()).padStart(2, '0');
+    const month = String(formattedDate.getMonth() + 1).padStart(2, '0');
+    const year = formattedDate.getFullYear();
+    return `${day}/${month}/${year}`;
   }
 
   async getTravels() {
@@ -86,13 +97,25 @@ export class Tab4Page implements OnInit {
         ...travel,
         type: isValidType(travel.type) ? travel.type : null,
         state: travel.state ? travel.state : null,
+        startAt: travel.startAt ? this.formatDate(travel.startAt) : null,
+        endAt: travel.endAt ? this.formatDate(travel.endAt) : null,
       }));
 
+      // Inicializa a lista filtrada com todos os itens
+      this.filteredTravels = [...this.travels];
       loading.dismiss();
     } catch (error: any) {
       loading.dismiss();
       await this.presentToast(error.error || 'Error fetching data', 'danger');
     }
+  }
+
+  // Função para filtrar as viagens com base na pesquisa
+  filterTravels() {
+    const query = this.searchQuery.toLowerCase(); // Obtém o valor da pesquisa em minúsculas
+    this.filteredTravels = this.travels.filter(travel =>
+      travel.prop2 ? travel.prop2.toLowerCase().includes(query) : false
+    );
   }
 
   openTravelDetails(travel: Travels) {
@@ -124,6 +147,7 @@ export class Tab4Page implements OnInit {
         this.http.delete(`${this.apiUrl}/travels/${travelId}`, { headers })
       );
       this.travels = this.travels.filter(travel => travel.id !== travelId);
+      this.filteredTravels = this.filteredTravels.filter(travel => travel.id !== travelId); // Remove também da lista filtrada
       loading.dismiss();
       this.isModalOpen = false;
       await this.presentToast('Travel deleted successfully.', 'success');
@@ -133,23 +157,20 @@ export class Tab4Page implements OnInit {
     }
   }
 
-  // Função para salvar as alterações
   async saveChanges() {
     if (!this.selectedTravel) return;
-
-    // Se o status for 'Starting' e não tiver startAt, preenche com a data atual de criação
-    if (this.state === State.Starting && !this.startAt) {
-      this.startAt = new Date().toISOString();
-    }
-
-    // Se o status for 'Finished' e não tiver endAt, preenche com a data de atualização
-    if (this.state === State.Finished && !this.endAt) {
-      this.endAt = new Date().toISOString();
-    }
 
     if (!this.type || !this.state || !this.description) {
       await this.presentToast('All fields must be filled out.', 'danger');
       return;
+    }
+
+    if (this.state === State.Starting && !this.startAt) {
+      this.startAt = this.formatDate(new Date().toISOString());
+    }
+
+    if (this.state === State.Finished && !this.endAt) {
+      this.endAt = this.formatDate(new Date().toISOString());
     }
 
     const loading = await this.showLoading();
@@ -157,22 +178,25 @@ export class Tab4Page implements OnInit {
       Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
     });
 
-    try {
-      const updatedTravel = {
-        ...this.selectedTravel,
-        type: this.type,
-        state: this.state,
-        description: this.description,
-        isFav: this.isFav,
-        startAt: this.startAt,
-        endAt: this.endAt,
-      };
+    const updatedTravel = {
+      ...this.selectedTravel,
+      type: this.type, // Certifique-se de usar o valor atualizado de type
+      state: this.state,
+      description: this.description,
+      isFav: this.isFav, // Certifique-se de usar o valor atualizado de isFav
+      startAt: this.startAt,
+      endAt: this.endAt,
+    };
 
-      const response = await firstValueFrom(
+    try {
+      await firstValueFrom(
         this.http.put(`${this.apiUrl}/travels/${this.selectedTravel.id}`, updatedTravel, { headers })
       );
 
       this.travels = this.travels.map(travel =>
+        travel.id === this.selectedTravel?.id ? updatedTravel : travel
+      );
+      this.filteredTravels = this.filteredTravels.map(travel =>
         travel.id === this.selectedTravel?.id ? updatedTravel : travel
       );
 
@@ -187,18 +211,22 @@ export class Tab4Page implements OnInit {
   }
 
   onStateChange() {
-    // Lógica para atualizar as datas com base no estado
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${
+      (currentDate.getMonth() + 1).toString().padStart(2, '0')
+    }/${currentDate.getFullYear()}`;
+
     if (this.state === State.Starting && !this.startAt) {
-      this.startAt = new Date().toISOString();  // Definir startAt para a data atual
+      this.startAt = formattedDate;
     }
 
     if (this.state === State.Finished && !this.endAt) {
-      this.endAt = new Date().toISOString();  // Definir endAt para a data atual
+      this.endAt = formattedDate;
     }
   }
 
   onFavChange(event: CustomEvent) {
-    this.isFav = event.detail.value;
+    this.isFav = event.detail.checked; // Use `checked` para obter o valor booleano do toggle/checkbox
   }
 
   cancelChanges() {

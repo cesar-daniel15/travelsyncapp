@@ -8,16 +8,22 @@
 </ion-header>
 
 <ion-content>
-  <!-- Search Bar -->
-  <ion-searchbar placeholder="Search Travels" class="search-bar" show-clear-button="focus"></ion-searchbar>
+  <!-- Barra de Pesquisa -->
+  <ion-searchbar
+    [(ngModel)]="searchQuery"
+    (ionInput)="filterTravels()"
+    placeholder="Search Travels"
+    class="search-bar"
+    show-clear-button="focus"
+  ></ion-searchbar>
 
-  <!-- Historic Section -->
+  <!-- Seção de Histórico -->
   <div class="historic-section">
     <ion-title id="historic" class="historic">{{ 'Historic' | translate }}</ion-title>
 
     <div class="cards">
-      <div class="card" *ngFor="let travel of travels | slice:-4" (click)="openTravelDetails(travel)">
-        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="card-image">
+      <div class="card" *ngFor="let travel of filteredTravels | slice:-4" (click)="openTravelDetails(travel)">
+        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="card-image" />
         <div class="card-title">{{ travel.prop2 }}</div>
       </div>
     </div>
@@ -28,8 +34,10 @@
 <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
   <ng-template>
     <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ selectedTravel?.prop2 }}</ion-title>
+      <ion-toolbar class="modal-toolbar">
+        <div class="modal-title-container">
+          <ion-title class="modal-title">{{ selectedTravel?.prop2 }}</ion-title>
+        </div>
         <ion-buttons slot="end">
           <ion-button color="danger" (click)="deleteTravel(selectedTravel?.id ?? null)">
             <ion-icon slot="icon-only" name="trash"></ion-icon>
@@ -37,10 +45,9 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    
+
     <ion-content>
       <ion-list>
-        <!-- Type -->
         <ion-item>
           <ion-label>Type:</ion-label>
           <ion-select [(ngModel)]="type">
@@ -48,8 +55,7 @@
             <ion-select-option value="Leisure">Leisure</ion-select-option>
           </ion-select>
         </ion-item>
-    
-        <!-- State -->
+
         <ion-item>
           <ion-label>State:</ion-label>
           <ion-select [(ngModel)]="state" (ionChange)="onStateChange()">
@@ -59,43 +65,29 @@
           </ion-select>
         </ion-item>
 
-        <!-- Is Fav -->
         <ion-item>
           <ion-label>Is Fav:</ion-label>
           <ion-checkbox [(ngModel)]="isFav" (ionChange)="onFavChange($event)"></ion-checkbox>
         </ion-item>
-        
-        <!-- Start At -->
-        <ion-item *ngIf="state === 'Starting'">
-          <ion-label>Start At:</ion-label>
-          <ion-datetime [(ngModel)]="startAt" [min]="minDate"></ion-datetime>
-        </ion-item>
-    
-        <!-- End At -->
-        <ion-item *ngIf="state === 'Finished'">
-          <ion-label>End At:</ion-label>
-          <ion-datetime [(ngModel)]="endAt" [min]="minDate"></ion-datetime>
-        </ion-item>
 
-          <!-- Description -->
-          <ion-item>
-            <ion-label>Description:</ion-label>
-            <ion-input [(ngModel)]="description"></ion-input>
-          </ion-item>
+        <ion-item>
+          <ion-label>Description:</ion-label>
+          <ion-input [(ngModel)]="description"></ion-input>
+        </ion-item>
       </ion-list>
-    
+
       <ion-footer>
         <ion-toolbar>
           <ion-row>
             <ion-col size="6">
-              <ion-button expand="block" color="success" (click)="saveChanges()">Save</ion-button>
+              <ion-button expand="block" color="medium" (click)="cancelChanges()">Cancel</ion-button>
             </ion-col>
             <ion-col size="6">
-              <ion-button expand="block" color="medium" (click)="cancelChanges()">Cancel</ion-button>
+              <ion-button expand="block" color="success" (click)="saveChanges()">Save</ion-button>
             </ion-col>
           </ion-row>
         </ion-toolbar>
       </ion-footer>
     </ion-content>
-    </ng-template>
+  </ng-template>
 </ion-modal>
