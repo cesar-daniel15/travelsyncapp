@@ -11,42 +11,26 @@
 
 <ion-content>
   
-  <h2 class="section-title">Favorite Trips</h2>
+    <!-- Favorite -->
+    <div class="favorite-section">
 
-  <div class="favorites-section">
-    <ion-card class="favorite-card">
-      <img src="../../assets/fotos/aspen.jpg" alt="Aspen">
-      <ion-card-content>
-        <ion-label>Aspen, USA</ion-label>
-        <div class="button-container">
-          <ion-button fill="solid" color="light">Action</ion-button>
-          <ion-button fill="solid" class="delete-button">Delete</ion-button>
-        </div>        
-      </ion-card-content>
-    </ion-card>
+      <ion-title class="favorite-title">Places Visited</ion-title>
+  
+    </div>
 
-    <ion-card class="favorite-card">
-      <img src="../../assets/fotos/prague.jpg" alt="Prague">
-      <ion-card-content>
-        <ion-label>Prague, Czech</ion-label>
-        <div class="button-container">
-          <ion-button fill="solid" color="light">Action</ion-button>
-          <ion-button fill="solid" class="delete-button">Delete</ion-button>
-        </div>              
-      </ion-card-content>
-    </ion-card>
-  </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="4" >
+          <ion-card class="favorite-card">
 
-  <div class="map-section">
-    <ion-card class="map-container">
-      <iframe
-        width="100%"
-        height="250"
-        frameborder="0"
-        style="border:0; border-radius: 8px;"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d243647.31825337046!2d13.288476650000001!3d52.5170362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851c4eb6abdb7%3A0x427d2a5d6f9ab00!2sBerlin!5e0!3m2!1sen!2sde!4v1620212913433!5m2!1sen!2sde"
-        allowfullscreen=""
-      ></iframe>
-    </ion-card>
-  </div>
+            <ion-card-header>
+              <ion-card-title>Torre de Belem</ion-card-title>
+              <ion-card-subtitle>Lisbon</ion-card-subtitle>
+            </ion-card-header>
+            
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
 </ion-content>
