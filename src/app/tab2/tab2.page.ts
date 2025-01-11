@@ -87,8 +87,8 @@ addIcons({
 export class RegisterPage {
 
   apiUrl: string = "https://mobile-api-one.vercel.app/api";
-  name: string = "cesar.daniel@ipvc.pt";
-  password: string = "uVt(D!u3";
+  name: string = "pedroboaventura@ipvc.pt";
+  password: string = "L4%xNz3W";
 
   selectedState: State = State.Planed;
   selectedType: Type = Type.Business;
