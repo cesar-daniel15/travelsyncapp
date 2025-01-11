@@ -1,103 +1,135 @@
-@use '../../theme/variables' ;
+@use '../../theme/variables';
 
 ion-header {
-    box-shadow: none;
+  box-shadow: none;
+}
+
+ion-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;  // Necessário para o título centralizado
+}
+
+.modal-title-container {
+  flex-grow: 1; // O título vai crescer para ocupar o espaço restante
+  display: flex;
+  justify-content: center; // Centraliza o título
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+ion-toolbar .modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: variables.$text-color;
+  margin: 0;
+}
+
+ion-buttons {
+  margin-left: auto;
 }
 
 ion-toolbar ion-buttons img {
-    width: 100px;
-    height: 100px;
-    margin-right: -20px;
+  width: 100px;
+  height: 100px;
+  margin-right: -20px;
 }
 
 ion-toolbar #title {
-    background: variables.$color-gradient;
-    background-clip: text;
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent; 
-    font-size: 1.2rem; 
-    font-weight: 550; 
+  background: variables.$color-gradient;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.2rem;
+  font-weight: 550;
 }
 
-ion-content .liked-section{
-    display: flex;
-    justify-content: space-between;
-    align-items: center; 
-    margin-top: 50px; 
-    margin-bottom: 25px;
+ion-content .liked-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 25px;
 }
 
 ion-searchbar {
-    margin: 16px 0;
-    --background: #f4f4f4;
-    --border-radius: 8px;
+  margin: 16px 0;
+  --background: #f4f4f4;
+  --border-radius: 8px;
 }
 
 ion-content .liked-section ion-title {
-    font-size: 1.3rem; 
-    color: variables.$text-color;
-    font-weight: bold; 
+  font-size: 1.3rem;
+  color: variables.$text-color;
+  font-weight: bold;
 }
 
 ion-content #see-all {
-    font-size: 15px;
-    font-weight: normal;
-    color: variables.$text-color-secondary; 
-    cursor: pointer; 
-    text-align: right;
-    margin-left: auto;
+  font-size: 15px;
+  font-weight: normal;
+  color: variables.$text-color-secondary;
+  cursor: pointer;
+  text-align: right;
+  margin-left: auto;
 }
 
 ion-content .liked-image {
-    width: 180px;
-    height: 200px;
-    margin-top: 10px; 
-    border-radius: 25px;
-    margin-left: 10px;
+  width: 180px;
+  height: 200px;
+  margin-top: 10px;
+  border-radius: 25px;
+  margin-left: 10px;
 }
 
 ion-content .historic-section ion-title {
-    font-size: 1.3rem; 
-    color: variables.$text-color;
-    font-weight: bold; 
-    margin-top: 50px; 
-    margin-bottom: 25px;
+  font-size: 1.3rem;
+  color: variables.$text-color;
+  font-weight: bold;
+  margin-top: 50px;
+  margin-bottom: 25px;
 }
 
 .historic-section {
-    display: flex;
-    flex-direction: column; 
-    align-items: flex-start; 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .historic-section .cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; 
-    margin-left: 10px;
-    margin-right: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .historic-section .card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: #F5F5F5;
-    border-radius: 25px;
-    box-sizing: border-box;
-    width: 170px; 
-    margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #F5F5F5;
+  border-radius: 25px;
+  box-sizing: border-box;
+  width: 170px;
+  margin: 10px;
 }
 
 .historic-section .card-image {
-    width: 100%; 
-    height: auto; 
-    border-radius: 25px; 
+  width: 100%;
+  height: auto;
+  border-radius: 25px;
 }
 
 .historic-section .card-title {
-    font-size: 15px; 
-    color: variables.$text-color; 
-    margin-top: 5px; 
+  font-size: 15px;
+  color: variables.$text-color;
+  margin-top: 5px;
+}
+
+ion-footer {
+  background-color: #fff;
 }
