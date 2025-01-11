@@ -51,7 +51,7 @@ export class Tab1Page implements OnInit {
   password: string = "uVt(D!u3";
 
   selectedState: State = State.Planed;
-  selectedType: Type = Type.Business;
+  selectedType: Type = Type.Leisure;
   description: string = '';
   isFav: boolean = false;
   prop1: string | null = null;
@@ -62,6 +62,8 @@ export class Tab1Page implements OnInit {
   State = State;
   travels: Travels[] = [];
   favoriteTravels: Travels[] = [];
+  startingTravels: Travels[] = [];
+  plannedTravels: Travels[] = [];
 
   ngOnInit() {
     this.getTravels(); 
@@ -77,9 +79,13 @@ export class Tab1Page implements OnInit {
     });
 
     try {
-      this.travels = await firstValueFrom(this.http.get<Travels[]>(`${this.apiUrl}/travels`, { headers }));
+      this.travels = await firstValueFrom(this.http.get<Travels[]>(`${this.apiUrl}/travels/`, { headers }));
+
       loading.dismiss();
+
       this.favoriteTravels = this.travels.filter(travel => travel.isFav);
+      this.startingTravels = this.travels.filter(travel => travel.state === State.Starting); 
+      this.plannedTravels = this.travels.filter(travel => travel.state === State.Planed); 
 
       if(this.travels.length == 0) {
         const message = this.translate.instant('NO_TRAVELS'); 
@@ -94,7 +100,7 @@ export class Tab1Page implements OnInit {
       loading.dismiss();
       await this.presentToast(error.error, 'danger');
     }
-  }
+  } 
 
   async showLoading() {
     const loading = await this.loadingCtrl.create({
