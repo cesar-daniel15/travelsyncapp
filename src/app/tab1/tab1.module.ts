@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
-
-
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { TravelModalComponent } from './components/travel-modal/travel-modal.component';
 
 
 @NgModule({
+  declarations: [Tab1Page,TravelModalComponent],
   imports: [
     IonicModule,
     CommonModule,
@@ -17,6 +17,5 @@ import { TranslateModule } from '@ngx-translate/core';
     Tab1PageRoutingModule,
     TranslateModule,
   ],
-  declarations: [Tab1Page]
 })
 export class Tab1PageModule {}

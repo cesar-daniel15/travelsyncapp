@@ -6,6 +6,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { TravelModalComponent } from './components/travel-modal/travel-modal.component';
+import { ModalController } from '@ionic/angular';
+
+
 
 enum State {
   Planed = "Planed",
@@ -67,7 +71,7 @@ export class Tab1Page implements OnInit {
     this.getTravels(); 
   }
 
-  constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService) {}
+  constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService, private modalCtrl: ModalController,) {}
   
   async getTravels() {
     const loading = await this.showLoading();
@@ -118,6 +122,15 @@ export class Tab1Page implements OnInit {
     document.body.appendChild(toast);  
     await toast.present();
   }
+  
+  async openTravelModal(travel: Travels) {
+    const modal = await this.modalCtrl.create({
+      component: TravelModalComponent,
+      componentProps: { travel },
+    });
+    await modal.present();
+  }
+  
 
   switchLanguage(language: string) {
     this.languageService.setLanguage(language);
