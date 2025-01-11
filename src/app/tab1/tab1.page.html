@@ -29,7 +29,7 @@
   </div>
   
   <div class="carousel">
-    <div class="carousel-inner">
+    <div class="carousel-inner" *ngIf="favoriteTravels.length > 0"></div>>
       <div class="carousel-item" *ngFor="let travel of favoriteTravels">
         <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="liked-image">
         <ion-icon name="heart" class="heart-icon"></ion-icon>
