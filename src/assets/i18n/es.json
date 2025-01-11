@@ -1,10 +1,12 @@
 {
     "Search": "Buscar",
-    "Liked": "Me gusta",
+    "Favorites": "Favoritas",
     "See All": "Ver todo",
-    "Historic": "Histórico",
+    "Already Started" : "Ya empezó",
+    "To Start": "Para empezar",
+    "No Registered Trips": "No hay viajes registrados 🙁",
     
-    "Title": "Título",
+    "Country": "País",
     "Type": "Tipo",
     "Type1": "Negocios",
     "Type2": "Ocio",
