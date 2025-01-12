@@ -52,10 +52,9 @@ export class ModalLocationsCommentsComponent implements OnInit {
       await firstValueFrom(this.http.delete(`${this.apiUrl}/travels/locations/comments/${commentId}`, { headers }));
       loading.dismiss();
     
-      await this.presentToast('Comentario deletado com sucesso!', 'success');
-      this.closeModal();
+      await this.presentToast('COMMENT_DELETED', 'danger'); 
     } catch (error: any) {
-      await this.presentToast('Erro ao deletar local.', 'danger');
+      await this.presentToast('ERROR_OCCURRED', 'danger'); 
       loading.dismiss();
       window.location.reload(); 
     }
@@ -78,7 +77,7 @@ export class ModalLocationsCommentsComponent implements OnInit {
       await firstValueFrom(this.http.post<Commets>(`${this.apiUrl}/travels/locations/comments`, newComment, { headers }));
       loading.dismiss();
 
-      await this.presentToast('Commetn ', 'success'); 
+      await this.presentToast('COMMENT_CREATED', 'success'); 
       window.location.reload(); 
 
     } catch (error: any) {
