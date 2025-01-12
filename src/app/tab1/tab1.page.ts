@@ -47,8 +47,8 @@ interface Travels{
 export class Tab1Page implements OnInit {
 
   apiUrl: string = "https://mobile-api-one.vercel.app/api";
-  name: string = "rubenbenedito@ipvc.pt";
-  password: string = "K6$yTp2Q";
+  name: string = "cesar.daniel@ipvc.pt";
+  password: string = "uVt(D!u3";
 
   selectedState: State = State.Planed;
   selectedType: Type = Type.Leisure;

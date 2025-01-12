@@ -12,6 +12,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ModalTravelComponent } from './modal-travel/modal-travel.component';
 
 // Funcao para carregar ficheiros de traducao
 export function HttpLoaderFactory(http: HttpClient) {
@@ -19,8 +20,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot({mode: "md"}), AppRoutingModule, HttpClientModule, FormsModule, TranslateModule.forRoot({loader: {provide: TranslateLoader, useFactory:HttpLoaderFactory, deps:[HttpClient],}},), ServiceWorkerModule.register('ngsw-worker.js', {
+  declarations: [AppComponent, ModalTravelComponent ],
+  imports: [BrowserModule, IonicModule.forRoot({mode: "md"}), AppRoutingModule,FormsModule, HttpClientModule, FormsModule, TranslateModule.forRoot({loader: {provide: TranslateLoader, useFactory:HttpLoaderFactory, deps:[HttpClient],}},), ServiceWorkerModule.register('ngsw-worker.js', {
   enabled: !isDevMode(),
   // Register the ServiceWorker as soon as the application is stable
   // or after 30 seconds (whichever comes first).

@@ -124,3 +124,12 @@ ion-content .history-section ion-title {
     margin-top: 5px; 
     margin-bottom: 5px; 
 }
+
+.no-travels {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    height: 50vh;
+    color: rgb(71, 71, 71); 
+    text-align: center;
+}

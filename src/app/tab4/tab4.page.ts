@@ -4,6 +4,8 @@ import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
+import { ModalTravelComponent } from '../modal-travel/modal-travel.component';
+import { ModalController } from '@ionic/angular'; 
 
 enum State {
   Planed = "Planed",
@@ -33,204 +35,86 @@ interface Travels {
   isFav: boolean;
 }
 
-function isValidType(type: any): type is Type {
-  return type === Type.Business || type === Type.Leisure;
-}
-
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
   styleUrls: ['./tab4.page.scss'],
 })
 export class Tab4Page implements OnInit {
+
   apiUrl: string = "https://mobile-api-one.vercel.app/api";
-  name: string = "rubenbenedito@ipvc.pt";
-  password: string = "K6$yTp2Q";
+  name: string = "cesar.daniel@ipvc.pt";
+  password: string = "uVt(D!u3";
 
   type: Type | null = null;
   state: State | null = null;
   description: string | null = null;
   travels: Travels[] = [];
-  filteredTravels: Travels[] = []; // Lista filtrada
+  filteredTravels: Travels[] = []; 
   selectedTravel: Travels | null = null;
   isModalOpen: boolean = false;
   isFav: boolean = false;
 
   startAt: string | null = null;
   endAt: string | null = null;
-  minDate: string = new Date().toISOString(); // Garantir que a data mínima seja a data atual
-  searchQuery: string = ''; // Variável para armazenar o valor da pesquisa
+  searchQuery: string = ''; 
 
   constructor(
     private languageService: LanguageService,
     private loadingCtrl: LoadingController,
     private http: HttpClient,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private modalCtrl: ModalController,
   ) {}
 
   ngOnInit() {
     this.getTravels();
   }
 
-  // Função para formatar a data no formato "DD/MM/YYYY"
-  formatDate(date: string): string {
-    const formattedDate = new Date(date);
-    const day = String(formattedDate.getDate()).padStart(2, '0');
-    const month = String(formattedDate.getMonth() + 1).padStart(2, '0');
-    const year = formattedDate.getFullYear();
-    return `${day}/${month}/${year}`;
-  }
-
   async getTravels() {
-    const loading = await this.showLoading();
+      const loading = await this.showLoading();
+  
+      const headers = new HttpHeaders({
+        Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+      });
+  
+      try {
+        this.travels = await firstValueFrom(this.http.get<Travels[]>(`${this.apiUrl}/travels/`, { headers }));
+        
+        this.filteredTravels = [...this.travels];
 
-    const headers = new HttpHeaders({
-      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
-    });
-
-    try {
-      const response = await firstValueFrom(
-        this.http.get<any[]>(`${this.apiUrl}/travels`, { headers })
-      );
-
-      this.travels = response.map(travel => ({
-        ...travel,
-        type: isValidType(travel.type) ? travel.type : null,
-        state: travel.state ? travel.state : null,
-        startAt: travel.startAt ? this.formatDate(travel.startAt) : null,
-        endAt: travel.endAt ? this.formatDate(travel.endAt) : null,
-      }));
-
-      // Inicializa a lista filtrada com todos os itens
-      this.filteredTravels = [...this.travels];
-      loading.dismiss();
-    } catch (error: any) {
-      loading.dismiss();
-      await this.presentToast(error.error || 'Error fetching data', 'danger');
-    }
-  }
+        loading.dismiss();
+  
+        if(this.travels.length == 0) {
+          const message = this.translate.instant('NO_TRAVELS'); 
+          await this.presentToast(message, 'warning');
+        }
+        else {
+          const message = this.translate.instant('SUCESS_GETING', { count: this.travels.length }); 
+          await this.presentToast(message, 'success');      
+        } 
+        
+      } catch (error : any) {
+        loading.dismiss();
+        await this.presentToast(error.error, 'danger');
+      }
+    } 
 
   // Função para filtrar as viagens com base na pesquisa
   filterTravels() {
-    const query = this.searchQuery.toLowerCase(); // Obtém o valor da pesquisa em minúsculas
+    const query = this.searchQuery.toLowerCase(); 
     this.filteredTravels = this.travels.filter(travel =>
       travel.prop2 ? travel.prop2.toLowerCase().includes(query) : false
     );
   }
 
-  openTravelDetails(travel: Travels) {
-    this.selectedTravel = travel;
-    this.type = travel.type;
-    this.state = travel.state;
-    this.description = travel.description;
-    this.isFav = travel.isFav;
-    this.startAt = travel.startAt;
-    this.endAt = travel.endAt;
-    this.isModalOpen = true;
-  }
-
-  closeModal() {
-    this.isModalOpen = false;
-    this.selectedTravel = null;
-  }
-
-  async deleteTravel(travelId: string | null) {
-    if (!travelId) return;
-    const loading = await this.showLoading();
-
-    const headers = new HttpHeaders({
-      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+  async openTravelModal(travel: Travels) {
+    const modal = await this.modalCtrl.create({
+      component: ModalTravelComponent,
+      backdropDismiss: false,
+      componentProps: { travel: travel }  
     });
-
-    try {
-      await firstValueFrom(
-        this.http.delete(`${this.apiUrl}/travels/${travelId}`, { headers })
-      );
-      this.travels = this.travels.filter(travel => travel.id !== travelId);
-      this.filteredTravels = this.filteredTravels.filter(travel => travel.id !== travelId); // Remove também da lista filtrada
-      loading.dismiss();
-      this.isModalOpen = false;
-      await this.presentToast('Travel deleted successfully.', 'success');
-    } catch (error: any) {
-      loading.dismiss();
-      await this.presentToast('Failed to delete travel.', 'danger');
-    }
-  }
-
-  async saveChanges() {
-    if (!this.selectedTravel) return;
-
-    if (!this.type || !this.state || !this.description) {
-      await this.presentToast('All fields must be filled out.', 'danger');
-      return;
-    }
-
-    if (this.state === State.Starting && !this.startAt) {
-      this.startAt = this.formatDate(new Date().toISOString());
-    }
-
-    if (this.state === State.Finished && !this.endAt) {
-      this.endAt = this.formatDate(new Date().toISOString());
-    }
-
-    const loading = await this.showLoading();
-    const headers = new HttpHeaders({
-      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
-    });
-
-    const updatedTravel = {
-      ...this.selectedTravel,
-      type: this.type, // Certifique-se de usar o valor atualizado de type
-      state: this.state,
-      description: this.description,
-      isFav: this.isFav, // Certifique-se de usar o valor atualizado de isFav
-      startAt: this.startAt,
-      endAt: this.endAt,
-    };
-
-    try {
-      await firstValueFrom(
-        this.http.put(`${this.apiUrl}/travels/${this.selectedTravel.id}`, updatedTravel, { headers })
-      );
-
-      this.travels = this.travels.map(travel =>
-        travel.id === this.selectedTravel?.id ? updatedTravel : travel
-      );
-      this.filteredTravels = this.filteredTravels.map(travel =>
-        travel.id === this.selectedTravel?.id ? updatedTravel : travel
-      );
-
-      loading.dismiss();
-      this.isModalOpen = false;
-      this.selectedTravel = null;
-      await this.presentToast('Changes saved successfully.', 'success');
-    } catch (error: any) {
-      loading.dismiss();
-      await this.presentToast('Failed to save changes.', 'danger');
-    }
-  }
-
-  onStateChange() {
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${
-      (currentDate.getMonth() + 1).toString().padStart(2, '0')
-    }/${currentDate.getFullYear()}`;
-
-    if (this.state === State.Starting && !this.startAt) {
-      this.startAt = formattedDate;
-    }
-
-    if (this.state === State.Finished && !this.endAt) {
-      this.endAt = formattedDate;
-    }
-  }
-
-  onFavChange(event: CustomEvent) {
-    this.isFav = event.detail.checked; // Use `checked` para obter o valor booleano do toggle/checkbox
-  }
-
-  cancelChanges() {
-    this.closeModal();
+    await modal.present();
   }
 
   async showLoading() {

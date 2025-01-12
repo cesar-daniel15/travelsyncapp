@@ -4,32 +4,11 @@ ion-header {
   box-shadow: none;
 }
 
-ion-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;  // Necessário para o título centralizado
-}
-
-.modal-title-container {
-  flex-grow: 1; // O título vai crescer para ocupar o espaço restante
-  display: flex;
-  justify-content: center; // Centraliza o título
-  position: absolute;
-  left: 0;
-  right: 0;
-  text-align: center;
-}
-
 ion-toolbar .modal-title {
   font-size: 1.5rem;
   font-weight: bold;
   color: variables.$text-color;
   margin: 0;
-}
-
-ion-buttons {
-  margin-left: auto;
 }
 
 ion-toolbar ion-buttons img {
@@ -116,18 +95,22 @@ ion-content .historic-section ion-title {
   box-sizing: border-box;
   width: 170px;
   margin: 10px;
+  position: relative;
+  overflow: hidden;
 }
 
 .historic-section .card-image {
   width: 100%;
-  height: auto;
+  height: 150px;
   border-radius: 25px;
+  object-fit: cover;
 }
 
 .historic-section .card-title {
   font-size: 15px;
   color: variables.$text-color;
   margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 ion-footer {

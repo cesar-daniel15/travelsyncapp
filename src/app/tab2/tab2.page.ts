@@ -89,8 +89,8 @@ addIcons({
 export class RegisterPage {
 
   apiUrl: string = "https://mobile-api-one.vercel.app/api";
-  name: string = "rubenbenedito@ipvc.pt";
-  password: string = "K6$yTp2Q";
+  name: string = "cesar.daniel@ipvc.pt";
+  password: string = "uVt(D!u3";
 
   selectedState: State = State.Planed;
   selectedType: Type = Type.Leisure;
@@ -170,7 +170,7 @@ export class RegisterPage {
       loading.dismiss();
       
       if (newTravel.state === State.Starting) {
-        newTravel.startAt = new Date().toISOString(); 
+        newTravel.startAt = new Date().toISOString().split('T')[0]; 
       }
 
       await this.presentToast('TRAVEL_CREATED', 'success'); 

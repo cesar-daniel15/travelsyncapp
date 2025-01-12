@@ -22,72 +22,10 @@
     <ion-title id="historic" class="historic">{{ 'Historic' | translate }}</ion-title>
 
     <div class="cards">
-      <div class="card" *ngFor="let travel of filteredTravels | slice:-4" (click)="openTravelDetails(travel)">
+      <div class="card" *ngFor="let travel of filteredTravels" (click)="openTravelModal(travel)">
         <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="card-image" />
         <div class="card-title">{{ travel.prop2 }}</div>
       </div>
     </div>
   </div>
 </ion-content>
-
-<!-- Modal -->
-<ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar class="modal-toolbar">
-        <div class="modal-title-container">
-          <ion-title class="modal-title">{{ selectedTravel?.prop2 }}</ion-title>
-        </div>
-        <ion-buttons slot="end">
-          <ion-button color="danger" (click)="deleteTravel(selectedTravel?.id ?? null)">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <ion-list>
-        <ion-item>
-          <ion-label>Type:</ion-label>
-          <ion-select [(ngModel)]="type">
-            <ion-select-option value="Business">Business</ion-select-option>
-            <ion-select-option value="Leisure">Leisure</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>State:</ion-label>
-          <ion-select [(ngModel)]="state" (ionChange)="onStateChange()">
-            <ion-select-option value="Planed">Planned</ion-select-option>
-            <ion-select-option value="Starting">Starting</ion-select-option>
-            <ion-select-option value="Finished">Finished</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Is Fav:</ion-label>
-          <ion-checkbox [(ngModel)]="isFav" (ionChange)="onFavChange($event)"></ion-checkbox>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Description:</ion-label>
-          <ion-input [(ngModel)]="description"></ion-input>
-        </ion-item>
-      </ion-list>
-
-      <ion-footer>
-        <ion-toolbar>
-          <ion-row>
-            <ion-col size="6">
-              <ion-button expand="block" color="medium" (click)="cancelChanges()">Cancel</ion-button>
-            </ion-col>
-            <ion-col size="6">
-              <ion-button expand="block" color="success" (click)="saveChanges()">Save</ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-toolbar>
-      </ion-footer>
-    </ion-content>
-  </ng-template>
-</ion-modal>
