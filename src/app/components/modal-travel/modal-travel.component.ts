@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '../services/language.service';
+import { LanguageService } from '../../services/language.service';
 import { ModalController, NavParams } from '@ionic/angular';
 
 enum State {

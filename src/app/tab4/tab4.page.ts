@@ -4,7 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
-import { ModalTravelComponent } from '../modal-travel/modal-travel.component';
+import { ModalTravelComponent } from '../components/modal-travel/modal-travel.component';
 import { ModalController } from '@ionic/angular'; 
 
 enum State {

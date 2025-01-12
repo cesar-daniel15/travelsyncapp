@@ -12,7 +12,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { ModalTravelComponent } from './modal-travel/modal-travel.component';
+import { ModalTravelComponent } from './components/modal-travel/modal-travel.component';
 
 // Funcao para carregar ficheiros de traducao
 export function HttpLoaderFactory(http: HttpClient) {

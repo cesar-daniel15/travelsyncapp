@@ -1,36 +1,28 @@
 <ion-header>
   <ion-toolbar>
-    
     <ion-buttons slot="start">
       <img src="assets/icon/favicon.png" />
       <ion-title id="title">TravelSync</ion-title>
     </ion-buttons> 
-    
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  
-    <!-- Favorite -->
-    <div class="favorite-section">
+  <!-- Favorite -->
+  <div class="favorite-section">
+    <ion-title class="favorite-title">Places Visited</ion-title>
+  </div>
 
-      <ion-title class="favorite-title">Places Visited</ion-title>
-  
-    </div>
-
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12" size-md="6" size-lg="4" >
-          <ion-card class="favorite-card">
-
-            <ion-card-header>
-              <ion-card-title>Torre de Belem</ion-card-title>
-              <ion-card-subtitle>Lisbon</ion-card-subtitle>
-            </ion-card-header>
-            
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let location of locations">
+        <ion-card class="favorite-card">
+          <ion-card-header>
+            <ion-card-title>{{ location.description }}</ion-card-title>
+            <ion-card-subtitle>{{ location.travelId }}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
