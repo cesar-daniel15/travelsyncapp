@@ -1,10 +1,10 @@
 ion-header {
-  background-color: #3880ff; // Cor de fundo do cabeçalho
+  background-color: #ffffff; // Cor de fundo do cabeçalho
   color: white; // Cor do texto
 }
 
 ion-toolbar {
-  --background: #3880ff; // Cor de fundo do toolbar
+  --background: #ffffff; // Cor de fundo do toolbar
 }
 
 ion-content {
@@ -40,6 +40,19 @@ ion-button[color="danger"] {
   background-color: #dc3545; // Cor do botão de deletar
 }
 
-ion-button[color="success"] {
-  background-color: #007bff; // Cor do botão de adicionar (azul)
-}
+.button-group {
+    display: flex;
+    justify-content: space-between; /* Espaçamento entre os botões */
+    margin-top: 16px; /* Espaçamento superior */
+  }
+  
+  ion-button[color="medium"] {
+    background-color: #6c757d; /* Cor do botão Close */
+    flex: 1; /* Ocupa o espaço disponível */
+    margin-left: 8px; /* Espaçamento entre os botões */
+  }
+  
+  ion-button[color="success"] {
+    flex: 1; /* Ocupa o espaço disponível */
+  }
+  

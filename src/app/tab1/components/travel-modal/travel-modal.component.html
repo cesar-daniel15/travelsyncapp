@@ -1,9 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Travel Locations</ion-title> <!-- Título em inglês -->
-    <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Close</ion-button> <!-- Botão em inglês -->
-    </ion-buttons>
+    <ion-title>Travel Locations</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -22,6 +19,9 @@
     <ion-input [(ngModel)]="description" placeholder="Location Name"></ion-input> <!-- Placeholder em inglês -->
   </ion-item>
 
-  <!-- Botão para adicionar o local -->
-  <ion-button expand="full" (click)="postLocation()">Add Location</ion-button> <!-- Botão em inglês -->
+  <!-- Botões ao final -->
+  <div class="button-group">
+    <ion-button color="medium" (click)="closeModal()">Close</ion-button> <!-- Botão ao lado -->
+    <ion-button expand="full" color="success" (click)="postLocation()">Add Location</ion-button> <!-- Botão em inglês -->
+  </div>
 </ion-content>
