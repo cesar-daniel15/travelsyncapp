@@ -170,7 +170,7 @@ export class RegisterPage {
       loading.dismiss();
       
       if (newTravel.state === State.Starting) {
-        newTravel.startAt = new Date().toISOString(); 
+        newTravel.startAt = new Date().toISOString().split('T')[0]; 
       }
 
       await this.presentToast('TRAVEL_CREATED', 'success'); 

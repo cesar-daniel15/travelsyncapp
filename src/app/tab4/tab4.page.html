@@ -1,38 +1,31 @@
 <ion-header>
   <ion-toolbar>
-    
     <ion-buttons slot="start">
       <img src="assets/icon/favicon.png" />
       <ion-title id="title">TravelSync</ion-title>
     </ion-buttons>
-    
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- Barra de Pesquisa -->
+  <ion-searchbar
+    [(ngModel)]="searchQuery"
+    (ionInput)="filterTravels()"
+    placeholder="Search Travels"
+    class="search-bar"
+    show-clear-button="focus"
+  ></ion-searchbar>
 
-  <!-- Barra -->
-  <ion-searchbar placeholder="Search Travels" class="search-bar" show-clear-button="focus"></ion-searchbar>
-
-  <!-- Historic -->
+  <!-- Seção de Histórico -->
   <div class="historic-section">
-
     <ion-title id="historic" class="historic">{{ 'Historic' | translate }}</ion-title>
 
-      <div class="cards">
-
-      <div class="card">
-        <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/448684704.jpg?k=af823f6d5b53821e811a5c457783b660e17c4b0bd05036413d165fccc4b50210&o=&hp=1" alt="Image" class="card-image">
-        <h3 class="card-title">Aspen, USA</h3>
+    <div class="cards">
+      <div class="card" *ngFor="let travel of filteredTravels" (click)="openTravelModal(travel)">
+        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="card-image" />
+        <div class="card-title">{{ travel.prop2 }}</div>
       </div>
-
-      <div class="card">
-        <img src="https://www.polyglotgathering.com/2024/img/photos/prague2.jpg" alt="Image" class="card-image">
-        <h3 class="card-title">Prague, Czech</h3>
-      </div>
-
     </div>
-
   </div>
-  
 </ion-content>

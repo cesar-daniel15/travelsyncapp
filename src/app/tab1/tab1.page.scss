@@ -71,7 +71,7 @@ ion-content .liked-section ion-title {
 }
 
 ion-content .liked-image {
-    width: 180px;
+    width: 170px;
     height: 200px;
     margin-top: 10px; 
     border-radius: 25px;
@@ -123,4 +123,13 @@ ion-content .history-section ion-title {
     color: variables.$text-color; 
     margin-top: 5px; 
     margin-bottom: 5px; 
+}
+
+.no-travels {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    height: 50vh;
+    color: rgb(71, 71, 71); 
+    text-align: center;
 }

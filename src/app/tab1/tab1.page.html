@@ -22,19 +22,20 @@
 <ion-content>
 
   <!-- Liked -->
-  <div class="liked-section">
+  <div class="liked-section" *ngIf="favoriteTravels.length > 0">
 
     <ion-title id="liked" class="liked">{{ 'Favorites' | translate }}</ion-title>
 
   </div>
   
-  <div class="carousel-item" *ngFor="let travel of favoriteTravels">
-    <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" 
-         alt="Image" 
-         class="liked-image"
-         (click)="openTravelModal(travel)">
-    <ion-icon name="heart" class="heart-icon"></ion-icon>
-  </div>
+  <div class="carousel">
+    <div class="carousel-inner"></div>
+      <div class="carousel-item" *ngFor="let travel of favoriteTravels">
+        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="liked-image">
+        <ion-icon name="heart" class="heart-icon"></ion-icon>
+      </div>
+    </div>
+  
 
   <!-- Starting Travels -->
   <div class="history-section" *ngIf="startingTravels.length > 0">
