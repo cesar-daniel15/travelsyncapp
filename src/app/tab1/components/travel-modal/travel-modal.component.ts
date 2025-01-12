@@ -68,6 +68,43 @@ export class TravelModalComponent {
       await this.presentToast('Erro ao deletar local.', 'danger');
     }
   }
+
+  async updateLocation(locationId: string) {
+    const loading = await this.showLoading();
+  
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+    });
+  
+    // Encontre o local que está sendo atualizado
+    const locationToUpdate = this.locations.find(location => location.id === locationId);
+  
+    if (!locationToUpdate) {
+      loading.dismiss();
+      await this.presentToast('Local não encontrado.', 'danger');
+      return;
+    }
+  
+    const updatedLocation = {
+      description: locationToUpdate.description, // Apenas a descrição do local
+    };
+  
+    try {
+      await firstValueFrom(this.http.put(`${this.apiUrl}/travels/locations/${locationId}`, updatedLocation, { headers }));
+      loading.dismiss();
+  
+      // Atualiza a lista de locais após a atualização
+      this.locations = this.locations.map(location => 
+        location.id === locationId ? { ...location, ...updatedLocation } : location
+      );
+      await this.presentToast('Local atualizado com sucesso!', 'success');
+    } catch (error: any) {
+      loading.dismiss();
+      console.error('Erro ao atualizar local:', error);
+      await this.presentToast('Erro ao atualizar local.', 'danger');
+    }
+  }
+
   // Método para adicionar um local à viagem
   async postLocation() {
     const loading = await this.showLoading();

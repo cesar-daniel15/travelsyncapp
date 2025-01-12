@@ -11,8 +11,9 @@
   <!-- Lista de locais já associados à viagem -->
   <ion-list>
     <ion-item *ngFor="let location of locations">
-      {{ location.description }} <!-- Exibe o nome do local -->
+      <ion-input [(ngModel)]="location.description" placeholder="Local Name"></ion-input>
       <ion-button slot="end" color="danger" (click)="deleteLocation(location.id)">Deletar</ion-button>
+      <ion-button expand="full" (click)="updateLocation(location.id)">Atualizar Local</ion-button>
     </ion-item>
   </ion-list>
 
