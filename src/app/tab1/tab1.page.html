@@ -31,7 +31,8 @@
   <div class="carousel">
     <div class="carousel-inner"></div>
       <div class="carousel-item" *ngFor="let travel of favoriteTravels">
-        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="liked-image">
+        <img [src]="travel.prop1 || 'assets/uploads/default-image.png'" alt="Image" class="liked-image"
+        (click)="openTravelModal(travel)">
         <ion-icon name="heart" class="heart-icon"></ion-icon>
       </div>
     </div>
