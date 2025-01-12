@@ -77,7 +77,7 @@ export class ModalTravelComponent implements OnInit {
       this.startAt = this.travel.startAt;
       this.endAt = this.travel.endAt;
       // Inicializa os comentários com valor padrão se for nulo
-      this.comments = this.travel.comments ?? '';  // Valor padrão
+      this.comments = this.travel.comments;  // Valor padrão
       this.selectedType = this.travel.type;
       this.selectedState = this.travel.state;
     }
