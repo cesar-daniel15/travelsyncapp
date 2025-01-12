@@ -32,6 +32,7 @@ interface Travels {
   prop1: string | null;
   prop2: string | null;
   isFav: boolean;
+  comments: string | null; // Adicionado para armazenar os comentários
 }
 
 @Component({
@@ -39,7 +40,7 @@ interface Travels {
   templateUrl: './modal-travel.component.html',
   styleUrls: ['./modal-travel.component.scss'],
 })
-export class ModalTravelComponent  implements OnInit {
+export class ModalTravelComponent implements OnInit {
   apiUrl: string = "https://mobile-api-one.vercel.app/api";
   name: string = "cesar.daniel@ipvc.pt";
   password: string = "uVt(D!u3";
@@ -50,8 +51,9 @@ export class ModalTravelComponent  implements OnInit {
   description: string | null = null;
   isFav: boolean = false;
   prop2: string | null = null;
-  startAt:  string | null = null;
+  startAt: string | null = null;
   endAt: string | null = null;
+  comments: string | null = null; // Adicionado para armazenar os comentários
 
   selectedType: Type | null = null;
   selectedState: State | null = null;
@@ -61,9 +63,9 @@ export class ModalTravelComponent  implements OnInit {
     private loadingCtrl: LoadingController,
     private http: HttpClient,
     private translate: TranslateService,
-    private navParams: NavParams, 
+    private navParams: NavParams,
     private modalCtrl: ModalController
-  ) { }
+  ) {}
 
   ngOnInit() {
     if (this.travel) {
@@ -71,11 +73,13 @@ export class ModalTravelComponent  implements OnInit {
       this.state = this.travel.state;
       this.description = this.travel.description;
       this.isFav = this.travel.isFav;
-      this.prop2 = this.travel.prop2
+      this.prop2 = this.travel.prop2;
       this.startAt = this.travel.startAt;
       this.endAt = this.travel.endAt;
-      this.selectedType = this.travel.type; 
-      this.selectedState = this.travel.state
+      // Inicializa os comentários com valor padrão se for nulo
+      this.comments = this.travel.comments ?? '';  // Valor padrão
+      this.selectedType = this.travel.type;
+      this.selectedState = this.travel.state;
     }
   }
 
@@ -86,26 +90,25 @@ export class ModalTravelComponent  implements OnInit {
       Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
     });
 
-    
     if (this.selectedState === State.Finished) {
       this.endAt = new Date().toISOString().split('T')[0];
     }
-  
+
     if (this.selectedState === State.Starting) {
-      this.startAt = new Date().toISOString().split('T')[0]; 
+      this.startAt = new Date().toISOString().split('T')[0];
     }
 
-
-    var updatedNote = { 
-      ...this.travel, 
-      description: this.description, 
-      state: this.selectedState, 
+    const updatedNote = {
+      ...this.travel,
+      description: this.description,
+      state: this.selectedState,
       priority: this.selectedType,
       prop2: this.prop2,
       isFav: this.isFav,
-      startAt: this.startAt, 
-      endAt: this.endAt
-    }
+      startAt: this.startAt,
+      endAt: this.endAt,
+      comments: this.comments, // Incluindo os comentários
+    };
 
     try {
       await firstValueFrom(this.http.put<Travels>(`${this.apiUrl}/travels/${this.travel.id}`, updatedNote, { headers }));
@@ -115,8 +118,7 @@ export class ModalTravelComponent  implements OnInit {
       this.dismissModal();
 
       window.location.reload(); 
-      
-    } catch (error : any) {
+    } catch (error: any) {
       loading.dismiss();
       await this.presentToast(error.error, 'danger');
     }
@@ -124,7 +126,7 @@ export class ModalTravelComponent  implements OnInit {
 
   closeModal() {
     this.modalCtrl.dismiss({
-      role: 'cancel'
+      role: 'cancel',
     });
   }
 
@@ -151,11 +153,8 @@ export class ModalTravelComponent  implements OnInit {
       loading.dismiss();
 
       await this.presentToast(`Travel successfully deleted 🚀`, 'success');
-      
       window.location.reload(); 
-
-      
-    } catch (error : any) {
+    } catch (error: any) {
       loading.dismiss();
       await this.presentToast(error.error, 'danger');
     }
