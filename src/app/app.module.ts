@@ -13,6 +13,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ModalTravelComponent } from './components/modal-travel/modal-travel.component';
+import { ModalLocationsCommentsComponent } from './components/modal-locations-comments/modal-locations-comments.component'; 
+import { ModalLocationComponent } from './components/modal-location/modal-location.component'; 
 
 // Funcao para carregar ficheiros de traducao
 export function HttpLoaderFactory(http: HttpClient) {
@@ -20,7 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, ModalTravelComponent ],
+  declarations: [AppComponent, ModalTravelComponent,ModalLocationsCommentsComponent, ModalLocationComponent ],
   imports: [BrowserModule, IonicModule.forRoot({mode: "md"}), AppRoutingModule,FormsModule, HttpClientModule, FormsModule, TranslateModule.forRoot({loader: {provide: TranslateLoader, useFactory:HttpLoaderFactory, deps:[HttpClient],}},), ServiceWorkerModule.register('ngsw-worker.js', {
   enabled: !isDevMode(),
   // Register the ServiceWorker as soon as the application is stable

@@ -10,19 +10,30 @@
 <ion-content>
   <!-- Favorite -->
   <div class="favorite-section">
-    <ion-title class="favorite-title">Places Visited</ion-title>
+    <ion-title class="favorite-title">{{ 'Places Visited' | translate }}</ion-title>
   </div>
 
   <ion-grid>
-    <ion-row>
-      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let location of locations">
-        <ion-card class="favorite-card">
+    <ion-row *ngFor="let travel of locations">
+      <ion-col size="12">
+        <ion-card *ngFor="let location of travel.locations" (click)="openCommentModal(location)"> 
+
           <ion-card-header>
-            <ion-card-title>{{ location.description }}</ion-card-title>
-            <ion-card-subtitle>{{ location.travelId }}</ion-card-subtitle>
+            <ion-card-title>{{ travel.prop2 }}</ion-card-title>
           </ion-card-header>
+
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let location of travel.locations">
+                {{ location.description }}
+              </ion-item>
+            </ion-list>
+
+          </ion-card-content>
+
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+  
 </ion-content>

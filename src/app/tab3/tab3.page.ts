@@ -8,6 +8,9 @@ import { CommonModule } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { ModalLocationsCommentsComponent } from '../components/modal-locations-comments/modal-locations-comments.component';
+
+import { ModalController } from '@ionic/angular'; 
 
 import { 
   IonHeader, 
@@ -46,7 +49,7 @@ interface Locations{
   createdAt: string; 
   updatedBy: string | null; 
   updatedAt: string;
-  // commets TravelComments;
+  comments: Comment[];  
   // photos TravelPhotos;
   prop1: string | null;
   prop2: string | null;
@@ -83,6 +86,7 @@ interface Travel {
     IonLabel,
     IonSelectOption,
     CommonModule, 
+    TranslateModule,
   ],
 })
 export class FavoriteTripsPage {
@@ -101,11 +105,17 @@ export class FavoriteTripsPage {
     private http: HttpClient,  
     private loadingCtrl: LoadingController, 
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private modalCtrl: ModalController,
+    private languageService: LanguageService
   ) {}
 
   ngOnInit() {
     this.getLocations(); 
+  }
+
+  ionViewWillEnter() {
+    this.getLocations();
   }
 
   async getLocations() {
@@ -140,6 +150,18 @@ export class FavoriteTripsPage {
     }
   } 
 
+  async openCommentModal(location: Locations) {
+    const modal = await this.modalCtrl.create({
+      component: ModalLocationsCommentsComponent,
+      componentProps: { locationId: location.id, comments: location.comments }, 
+    });
+  
+    modal.onDidDismiss().then(() => {
+      this.getLocations(); 
+    });
+  
+    await modal.present();
+  }
   // Método para exibir a tela de carregamento
   async showLoading() {
     const loading = await this.loadingCtrl.create({
@@ -152,7 +174,7 @@ export class FavoriteTripsPage {
 
   // Método para mostrar uma mensagem de sucesso ou erro
   async presentToast(messageKey: string, color: string = 'success') {
-    const message = messageKey; 
+    const message = await firstValueFrom(this.translate.get(messageKey)); 
     const toast = document.createElement('ion-toast');
     toast.message = message;  
     toast.color = color;     
@@ -162,5 +184,11 @@ export class FavoriteTripsPage {
     await toast.present();
   }
 
+  switchLanguage(language: string) {
+    this.languageService.setLanguage(language);
+  }
 
+  getCurrentLanguage() {
+    return this.languageService.getLanguage();
+  }
 }
