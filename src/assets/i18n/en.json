@@ -22,8 +22,36 @@
 
     "NO_TRAVELS": "There are no travels available 😥",
     "SUCESS_GETING": "Success getting {{count}} travels 🚀",
+    "LOCATION_DELETED": "Location Deleted",
+    "LOCATION_UPDATED": "Location Updated",
+    "LOCATION_CREATED":"Location Created",
+    "Travel Locations": "Travel Location",
+    "Location Name": "Location Name",
+    "Update": "Update",
+    "Delete": "Delete",
+    "Close": "Close",
+    "Add Location": "Add Location",
+
+    "Places Visited": "Places Visited",
+    "Add Comment": "Add Comment",
+    "Type your comment here...": "Type your comment here...",
+    "Cancel": "Cancel",
+    "Save": "Save",
+
+    "Search Travels": "Search Travels",
+    "Historic": "Historic",
+
+    "Enter travel name": "Enter travel name",
+    "Business": "Business",
+    "Leisure": "Leisure",
+    "Planned": "Planned",
+    "Starting": "Starting",
+    "Finished": "Finished",
+    "Is Favorite": "Is Favorite",
 
     "TRAVEL_CREATED": "Travel successfully created 🚀",
+    "TRAVEL_UPDATED": "Travel successfully updated ✏️",
+    "TRAVEL_DELETED": "Travel successfully deleted 🗑️",
     "ERROR_OCCURRED": "An error occurred 🙁"
 
 }

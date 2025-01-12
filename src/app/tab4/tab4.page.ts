@@ -4,7 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
-import { ModalTravelComponent } from '../modal-travel/modal-travel.component';
+import { ModalTravelComponent } from '../components/modal-travel/modal-travel.component';
 import { ModalController } from '@ionic/angular'; 
 
 enum State {
@@ -86,8 +86,8 @@ export class Tab4Page implements OnInit {
         loading.dismiss();
   
         if(this.travels.length == 0) {
-          const message = this.translate.instant('NO_TRAVELS'); 
-          await this.presentToast(message, 'warning');
+          await this.presentToast('ERROR_OCCURRED', 'danger'); 
+
         }
         else {
           const message = this.translate.instant('SUCESS_GETING', { count: this.travels.length }); 
@@ -96,7 +96,7 @@ export class Tab4Page implements OnInit {
         
       } catch (error : any) {
         loading.dismiss();
-        await this.presentToast(error.error, 'danger');
+        await this.presentToast('ERROR_OCCURRED', 'danger'); 
       }
     } 
 
@@ -127,7 +127,8 @@ export class Tab4Page implements OnInit {
     return loading;
   }
 
-  async presentToast(message: string, color: string = 'success') {
+  async presentToast(messageKey: string, color: string = 'success') {
+    const message = await firstValueFrom(this.translate.get(messageKey)); 
     const toast = document.createElement('ion-toast');
     toast.message = message;
     toast.color = color;

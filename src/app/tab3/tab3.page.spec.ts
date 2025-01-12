@@ -1,27 +1,25 @@
-import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { IonicModule } from '@ionic/angular';
 
-@Component({
-  selector: 'app-favorite-trips',
-  templateUrl: './favorite-trips.page.html',
-  styleUrls: ['./favorite-trips.page.scss'],
-})
-export class FavoriteTripsPage {
-  lugaresFavoritos: string[] = [
-    'Praia de Copacabana',
-    'Monte Everest',
-    'Torre Eiffel',
-    'Grand Canyon'
-  ];
 
-  constructor() {}
+import { FavoriteTripsPage } from './tab3.page';
 
-  acao(lugar: string) {
-    console.log(`Ação para: ${lugar}`);
-    // Adicione a lógica para a ação aqui
-  }
+describe('FavoriteTripsPage', () => {
+  let component: FavoriteTripsPage;
+  let fixture: ComponentFixture<FavoriteTripsPage>;
 
-  deletar(lugar: string) {
-    this.lugaresFavoritos = this.lugaresFavoritos.filter(l => l !== lugar);
-    console.log(`Deletado: ${lugar}`);
-  }
-}
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [FavoriteTripsPage],
+      imports: [IonicModule.forRoot()]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(FavoriteTripsPage);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

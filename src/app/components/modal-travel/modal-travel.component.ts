@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '../services/language.service';
+import { LanguageService } from '../../services/language.service';
 import { ModalController, NavParams } from '@ionic/angular';
 
 enum State {
@@ -111,7 +111,8 @@ export class ModalTravelComponent  implements OnInit {
       await firstValueFrom(this.http.put<Travels>(`${this.apiUrl}/travels/${this.travel.id}`, updatedNote, { headers }));
       loading.dismiss();
 
-      await this.presentToast(`Travel successfully updated 🚀`, 'success');
+      await this.presentToast('TRAVEL_UPDATED', 'success'); 
+
       this.dismissModal();
 
       window.location.reload(); 
@@ -150,7 +151,7 @@ export class ModalTravelComponent  implements OnInit {
       await firstValueFrom(this.http.delete(`${this.apiUrl}/travels/${this.travel.id}`, { headers }));
       loading.dismiss();
 
-      await this.presentToast(`Travel successfully deleted 🚀`, 'success');
+      await this.presentToast('TRAVEL_DELETED', 'success'); 
       
       window.location.reload(); 
 
@@ -171,7 +172,8 @@ export class ModalTravelComponent  implements OnInit {
     return loading;
   }
 
-  async presentToast(message: string, color: string = 'success') {
+  async presentToast(messageKey: string, color: string = 'success') {
+    const message = await firstValueFrom(this.translate.get(messageKey)); 
     const toast = document.createElement('ion-toast');
     toast.message = message;
     toast.color = color;
