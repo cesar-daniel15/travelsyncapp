@@ -51,5 +51,8 @@
     "TRAVEL_CREATED": "Viagem criada com sucesso 🚀",
     "TRAVEL_UPDATED": "Viagem atualizada com sucesso ✏️",
     "TRAVEL_DELETED": "Viagem apagada com sucesso 🗑️",
-    "ERROR_OCCURRED": "Ocorreu um erro 🙁"
+    "ERROR_OCCURRED": "Ocorreu um erro 🙁",
+
+    "COMMENT_CREATED": "Comentário criado com sucesso 🚀",
+    "COMMENT_DELETED": "Comentário apagado com sucesso 🗑️"
 }

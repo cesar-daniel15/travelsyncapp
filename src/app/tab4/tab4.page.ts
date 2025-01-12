@@ -33,6 +33,7 @@ interface Travels {
   prop1: string | null;
   prop2: string | null;
   isFav: boolean;
+  comments: Comment[];  
 }
 
 @Component({

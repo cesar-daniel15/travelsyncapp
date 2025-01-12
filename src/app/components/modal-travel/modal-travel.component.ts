@@ -34,6 +34,12 @@ interface Travels {
   isFav: boolean;
 }
 
+interface Commets{ 
+  id: string;
+  locationId: string ,
+  comment: string ,
+}
+
 @Component({
   selector: 'app-modal-travel',
   templateUrl: './modal-travel.component.html',
@@ -45,6 +51,10 @@ export class ModalTravelComponent  implements OnInit {
   password: string = "uVt(D!u3";
 
   travel!: Travels;
+  @Input() comments: Commets[] = [];
+  @Input() traveld: string = '';
+  comment: string = '';
+
   type: string | null = null;
   state: string | null = null;
   description: string | null = null;
@@ -154,7 +164,6 @@ export class ModalTravelComponent  implements OnInit {
       await this.presentToast('TRAVEL_DELETED', 'success'); 
       
       window.location.reload(); 
-
       
     } catch (error : any) {
       loading.dismiss();
@@ -183,6 +192,54 @@ export class ModalTravelComponent  implements OnInit {
     document.body.appendChild(toast);
     await toast.present();
   }
+
+  async deleteComment(commentId: string) {
+    const loading = await this.showLoading();
+    
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+    });
+    
+    try {
+      await firstValueFrom(this.http.delete(`${this.apiUrl}/travels/comments/${commentId}`, { headers }));
+      loading.dismiss();
+    
+      await this.presentToast('COMMENT_DELETED', 'sucess'); 
+      this.closeModal();
+      window.location.reload(); 
+
+    } catch (error: any) {
+      await this.presentToast('ERROR_OCCURRED', 'danger'); 
+      loading.dismiss();
+      window.location.reload(); 
+    }
+  }
+
+    async postComment() {
+      const loading = await this.showLoading();
+  
+      const headers = new HttpHeaders({
+        Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+      });
+    
+      const newComment = {
+        locationId: this.traveld,
+        comment: this.comment, 
+      };
+      
+      try {
+  
+        await firstValueFrom(this.http.post<Commets>(`${this.apiUrl}/travels/comments`, newComment, { headers }));
+        loading.dismiss();
+  
+        await this.presentToast('COMMENT_CREATED', 'success'); 
+        window.location.reload(); 
+  
+      } catch (error: any) {
+        loading.dismiss();
+        await this.presentToast('ERROR_OCCURRED', 'danger'); 
+      }
+    }
 
   switchLanguage(language: string) {
     this.languageService.setLanguage(language);
