@@ -132,10 +132,16 @@ export class Tab1Page implements OnInit {
   async openTravelModal(travel: Travels) {
     const modal = await this.modalCtrl.create({
       component: TravelModalComponent,
-      componentProps: { travel },
+      componentProps: { travelId: travel.id }, // Passando o ID da viagem
     });
+  
+    modal.onDidDismiss().then(() => {
+      this.getTravels(); // Recarrega as viagens após o modal ser fechado
+    });
+  
     await modal.present();
   }
+  
   
 
   switchLanguage(language: string) {

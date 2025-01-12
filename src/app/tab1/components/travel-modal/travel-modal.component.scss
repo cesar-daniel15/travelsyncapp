@@ -1,0 +1,26 @@
+ion-header {
+    background-color: #3880ff; // Cor de fundo do cabeçalho
+    color: white; // Cor do texto
+  }
+  
+  ion-toolbar {
+    --background: #3880ff; // Cor de fundo do toolbar
+  }
+  
+  ion-content {
+    padding: 16px; // Espaçamento interno
+  }
+  
+  ion-list {
+    margin-bottom: 16px; // Espaçamento inferior da lista
+  }
+  
+  ion-item {
+    display: flex; // Flexbox para alinhar os itens
+    justify-content: space-between; // Espaço entre a descrição e o botão
+    align-items: center; // Alinhamento vertical
+  }
+  
+  ion-button {
+    margin-left: 8px; // Espaçamento à esquerda do botão
+  }
