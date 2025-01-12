@@ -1,26 +1,45 @@
 ion-header {
-    background-color: #3880ff; // Cor de fundo do cabeçalho
-    color: white; // Cor do texto
-  }
-  
-  ion-toolbar {
-    --background: #3880ff; // Cor de fundo do toolbar
-  }
-  
-  ion-content {
-    padding: 16px; // Espaçamento interno
-  }
-  
-  ion-list {
-    margin-bottom: 16px; // Espaçamento inferior da lista
-  }
-  
-  ion-item {
-    display: flex; // Flexbox para alinhar os itens
-    justify-content: space-between; // Espaço entre a descrição e o botão
-    align-items: center; // Alinhamento vertical
-  }
-  
-  ion-button {
-    margin-left: 8px; // Espaçamento à esquerda do botão
-  }
+  background-color: #3880ff; // Cor de fundo do cabeçalho
+  color: white; // Cor do texto
+}
+
+ion-toolbar {
+  --background: #3880ff; // Cor de fundo do toolbar
+}
+
+ion-content {
+  padding: 16px; // Espaçamento interno
+  background-color: #f8f8f8; // Cor de fundo do conteúdo
+}
+
+ion-list {
+  margin-bottom: 16px; // Espaçamento inferior da lista
+}
+
+ion-item {
+  display: flex; // Flexbox para alinhar os itens
+  justify-content: space-between; // Espaço entre a descrição e o botão
+  align-items: center; // Alinhamento vertical
+}
+
+ion-input {
+  flex: 1; // Permite que o campo de entrada ocupe o espaço disponível
+  margin-right: 8px; // Espaçamento à direita do campo de entrada
+}
+
+ion-button {
+  margin-left: 8px; // Espaçamento à esquerda do botão
+  border-radius: 8px; // Bordas arredondadas
+}
+
+ion-button[color="primary"] {
+  background-color: #007bff; // Cor do botão de atualizar
+}
+
+ion-button[color="danger"] {
+  background-color: #dc3545; // Cor do botão de deletar
+}
+
+ion-button[color="success"] {
+  background-color: #007bff; // Cor do botão de adicionar (azul)
+}

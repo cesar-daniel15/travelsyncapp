@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Locais da Viagem</ion-title>
+    <ion-title>Travel Locations</ion-title> <!-- Título em inglês -->
     <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Fechar</ion-button>
+      <ion-button (click)="closeModal()">Close</ion-button> <!-- Botão em inglês -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -11,17 +11,17 @@
   <!-- Lista de locais já associados à viagem -->
   <ion-list>
     <ion-item *ngFor="let location of locations">
-      <ion-input [(ngModel)]="location.description" placeholder="Local Name"></ion-input>
-      <ion-button slot="end" color="danger" (click)="deleteLocation(location.id)">Deletar</ion-button>
-      <ion-button expand="full" (click)="updateLocation(location.id)">Atualizar Local</ion-button>
+      <ion-input [(ngModel)]="location.description" placeholder="Location Name"></ion-input> <!-- Placeholder em inglês -->
+      <ion-button color="primary" (click)="updateLocation(location.id)">Update</ion-button> <!-- Botão em inglês -->
+      <ion-button color="danger" (click)="deleteLocation(location.id)">Delete</ion-button> <!-- Botão em inglês -->
     </ion-item>
   </ion-list>
 
   <!-- Campo para adicionar o nome do local -->
   <ion-item>
-    <ion-input [(ngModel)]="description" placeholder="Local Name"></ion-input>
+    <ion-input [(ngModel)]="description" placeholder="Location Name"></ion-input> <!-- Placeholder em inglês -->
   </ion-item>
 
   <!-- Botão para adicionar o local -->
-  <ion-button expand="full" (click)="postLocation()">Adicionar Local</ion-button>
+  <ion-button expand="full" (click)="postLocation()">Add Location</ion-button> <!-- Botão em inglês -->
 </ion-content>
