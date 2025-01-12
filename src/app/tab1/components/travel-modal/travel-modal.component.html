@@ -12,6 +12,7 @@
   <ion-list>
     <ion-item *ngFor="let location of locations">
       {{ location.description }} <!-- Exibe o nome do local -->
+      <ion-button slot="end" color="danger" (click)="deleteLocation(location.id)">Deletar</ion-button>
     </ion-item>
   </ion-list>
 

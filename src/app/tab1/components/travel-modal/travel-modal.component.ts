@@ -46,6 +46,28 @@ export class TravelModalComponent {
       console.error('Error fetching locations:', error);
     }
   }
+
+  async deleteLocation(locationId: string) {
+    const loading = await this.showLoading();
+  
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+    });
+  
+    try {
+      // Usando a URL correta para deletar o local
+      await firstValueFrom(this.http.delete(`${this.apiUrl}/travels/locations/${locationId}`, { headers }));
+      loading.dismiss();
+  
+      // Atualiza a lista de locais após a exclusão
+      this.locations = this.locations.filter(location => location.id !== locationId);
+      await this.presentToast('Local deletado com sucesso!', 'success');
+    } catch (error: any) {
+      loading.dismiss();
+      console.error('Erro ao deletar local:', error); // Log do erro para depuração
+      await this.presentToast('Erro ao deletar local.', 'danger');
+    }
+  }
   // Método para adicionar um local à viagem
   async postLocation() {
     const loading = await this.showLoading();
