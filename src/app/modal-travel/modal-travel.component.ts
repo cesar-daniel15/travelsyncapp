@@ -32,7 +32,7 @@ interface Travels {
   prop1: string | null;
   prop2: string | null;
   isFav: boolean;
-  comments: string | null; // Adicionado para armazenar os comentários
+  comments: string[]; // Alterado para um array de comentários
 }
 
 @Component({
@@ -53,10 +53,11 @@ export class ModalTravelComponent implements OnInit {
   prop2: string | null = null;
   startAt: string | null = null;
   endAt: string | null = null;
-  comments: string | null = null; // Adicionado para armazenar os comentários
+  comments: string[] = []; // Alterado para um array de comentários
 
   selectedType: Type | null = null;
   selectedState: State | null = null;
+  newComment: string = ''; // Variável para armazenar o novo comentário
 
   constructor(
     private languageService: LanguageService,
@@ -76,13 +77,47 @@ export class ModalTravelComponent implements OnInit {
       this.prop2 = this.travel.prop2;
       this.startAt = this.travel.startAt;
       this.endAt = this.travel.endAt;
-      // Inicializa os comentários com valor padrão se for nulo
-      this.comments = this.travel.comments;  // Valor padrão
+      this.comments = this.travel.comments || []; // Inicializa a lista de comentários
       this.selectedType = this.travel.type;
       this.selectedState = this.travel.state;
     }
   }
 
+  // Função para adicionar comentário
+  addComment(newComment: string) {
+    if (newComment.trim()) {
+      this.comments.push(newComment); // Adiciona o novo comentário à lista de comentários
+      this.saveComment(newComment);  // Envia o comentário para a API
+      this.newComment = '';  // Limpa o campo de texto após adicionar o comentário
+    }
+  }
+
+  // Função para salvar o comentário na API
+  saveComment(newComment: string) {
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+    });
+
+    // Exemplo de corpo de requisição para salvar comentário
+    const commentData = {
+      travelId: this.travel.id,
+      comment: newComment
+    };
+
+    this.http.post(`${this.apiUrl}/travels/comments`, commentData, { headers }).subscribe(
+      (response) => {
+        console.log("Comentário enviado com sucesso:", response);
+        // Atualiza a lista de comentários após o envio
+        this.comments.push(newComment);
+        this.saveChanges();  // Salva as mudanças na viagem, incluindo os comentários
+      },
+      (error) => {
+        console.error("Erro ao enviar comentário:", error);
+      }
+    );
+  }
+
+  // Função para atualizar a viagem
   async putTravel() {
     const loading = await this.showLoading();
 
@@ -117,7 +152,7 @@ export class ModalTravelComponent implements OnInit {
       await this.presentToast(`Travel successfully updated 🚀`, 'success');
       this.dismissModal();
 
-      window.location.reload(); 
+      window.location.reload();
     } catch (error: any) {
       loading.dismiss();
       await this.presentToast(error.error, 'danger');
@@ -153,7 +188,7 @@ export class ModalTravelComponent implements OnInit {
       loading.dismiss();
 
       await this.presentToast(`Travel successfully deleted 🚀`, 'success');
-      window.location.reload(); 
+      window.location.reload();
     } catch (error: any) {
       loading.dismiss();
       await this.presentToast(error.error, 'danger');

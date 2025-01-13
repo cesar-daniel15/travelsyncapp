@@ -45,11 +45,6 @@
       <ion-input [(ngModel)]="description"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label>{{ 'Comments' | translate }}:</ion-label>
-      <ion-textarea [(ngModel)]="comments" placeholder="{{ 'Add your comments here' | translate }}"></ion-textarea>
-    </ion-item>
-
     <!-- <ion-item>
       <ion-label>{{ 'Start At' | translate }}:</ion-label>
       <ion-input [(ngModel)]="startAt" placeholder="{{ 'Enter start date' | translate }}" type="date"></ion-input>
@@ -59,6 +54,15 @@
       <ion-label>{{ 'End At' | translate }}:</ion-label>
       <ion-input [(ngModel)]="endAt" placeholder="{{ 'Enter end date' | translate }}" type="date"></ion-input>
     </ion-item> -->
+
+    <ion-item>
+      <ion-label position="stacked">Add Comment</ion-label>
+      <ion-textarea [(ngModel)]="newComment" placeholder="Enter your comment"></ion-textarea>
+    </ion-item>
+  
+    <ion-item>
+      <ion-button expand="full" (click)="addComment(newComment)">Add Comment</ion-button>
+    </ion-item>
 
   </ion-list>
 

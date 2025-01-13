@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Comments</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let comment of comments">
+      <ion-label>{{ comment }}</ion-label>
+      <ion-button fill="clear" color="danger" (click)="deleteComment(comment)">
+        <ion-icon name="trash" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-label position="stacked">Add Comment</ion-label>
+    <ion-textarea [(ngModel)]="newComment" placeholder="Enter your comment"></ion-textarea>
+  </ion-item>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button expand="full" (click)="addComment()">Add Comment</ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>
