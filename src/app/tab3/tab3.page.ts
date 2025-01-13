@@ -134,7 +134,6 @@ export class FavoriteTripsPage {
 
       loading.dismiss();
 
-
       if(this.locations.length == 0) {
         const message = this.translate.instant('NO_TRAVELS'); 
         await this.presentToast(message, 'warning');
