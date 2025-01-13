@@ -224,7 +224,7 @@ export class ModalTravelComponent  implements OnInit {
     });
     
     const newComment = {
-      travelId: this.travelId,
+      travelid: this.travelid,
       comment: this.comment, 
     };
     
