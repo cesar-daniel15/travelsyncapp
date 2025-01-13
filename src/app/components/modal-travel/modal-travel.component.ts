@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '../services/language.service';
+import { LanguageService } from '../../services/language.service';
 import { ModalController, NavParams } from '@ionic/angular';
 
 enum State {
@@ -32,7 +32,13 @@ interface Travels {
   prop1: string | null;
   prop2: string | null;
   isFav: boolean;
-  comments: string[]; // Alterado para um array de comentários
+  comments: Commets[];
+}
+
+interface Commets{ 
+  id: string;
+  travelId: string ,
+  comment: string ,
 }
 
 @Component({
@@ -40,33 +46,35 @@ interface Travels {
   templateUrl: './modal-travel.component.html',
   styleUrls: ['./modal-travel.component.scss'],
 })
-export class ModalTravelComponent implements OnInit {
+export class ModalTravelComponent  implements OnInit {
   apiUrl: string = "https://mobile-api-one.vercel.app/api";
   name: string = "cesar.daniel@ipvc.pt";
   password: string = "uVt(D!u3";
 
   travel!: Travels;
+  @Input() comments: Commets[] = [];
+  @Input() travelId: string = '';
+  comment: string = '';
+
   type: string | null = null;
   state: string | null = null;
   description: string | null = null;
   isFav: boolean = false;
   prop2: string | null = null;
-  startAt: string | null = null;
+  startAt:  string | null = null;
   endAt: string | null = null;
-  comments: string[] = []; // Alterado para um array de comentários
 
   selectedType: Type | null = null;
   selectedState: State | null = null;
-  newComment: string = ''; // Variável para armazenar o novo comentário
 
   constructor(
     private languageService: LanguageService,
     private loadingCtrl: LoadingController,
     private http: HttpClient,
     private translate: TranslateService,
-    private navParams: NavParams,
+    private navParams: NavParams, 
     private modalCtrl: ModalController
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.travel) {
@@ -74,50 +82,15 @@ export class ModalTravelComponent implements OnInit {
       this.state = this.travel.state;
       this.description = this.travel.description;
       this.isFav = this.travel.isFav;
-      this.prop2 = this.travel.prop2;
+      this.prop2 = this.travel.prop2
       this.startAt = this.travel.startAt;
       this.endAt = this.travel.endAt;
-      this.comments = this.travel.comments || []; // Inicializa a lista de comentários
-      this.selectedType = this.travel.type;
+      this.selectedType = this.travel.type; 
       this.selectedState = this.travel.state;
+      this.comments = this.travel.comments || [];
     }
   }
 
-  // Função para adicionar comentário
-  addComment(newComment: string) {
-    if (newComment.trim()) {
-      this.comments.push(newComment); // Adiciona o novo comentário à lista de comentários
-      this.saveComment(newComment);  // Envia o comentário para a API
-      this.newComment = '';  // Limpa o campo de texto após adicionar o comentário
-    }
-  }
-
-  // Função para salvar o comentário na API
-  saveComment(newComment: string) {
-    const headers = new HttpHeaders({
-      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
-    });
-
-    // Exemplo de corpo de requisição para salvar comentário
-    const commentData = {
-      travelId: this.travel.id,
-      comment: newComment
-    };
-
-    this.http.post(`${this.apiUrl}/travels/comments`, commentData, { headers }).subscribe(
-      (response) => {
-        console.log("Comentário enviado com sucesso:", response);
-        // Atualiza a lista de comentários após o envio
-        this.comments.push(newComment);
-        this.saveChanges();  // Salva as mudanças na viagem, incluindo os comentários
-      },
-      (error) => {
-        console.error("Erro ao enviar comentário:", error);
-      }
-    );
-  }
-
-  // Função para atualizar a viagem
   async putTravel() {
     const loading = await this.showLoading();
 
@@ -125,35 +98,38 @@ export class ModalTravelComponent implements OnInit {
       Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
     });
 
+    
     if (this.selectedState === State.Finished) {
       this.endAt = new Date().toISOString().split('T')[0];
     }
-
+  
     if (this.selectedState === State.Starting) {
-      this.startAt = new Date().toISOString().split('T')[0];
+      this.startAt = new Date().toISOString().split('T')[0]; 
     }
 
-    const updatedNote = {
-      ...this.travel,
-      description: this.description,
-      state: this.selectedState,
+
+    var updatedNote = { 
+      ...this.travel, 
+      description: this.description, 
+      state: this.selectedState, 
       priority: this.selectedType,
       prop2: this.prop2,
       isFav: this.isFav,
-      startAt: this.startAt,
-      endAt: this.endAt,
-      comments: this.comments, // Incluindo os comentários
-    };
+      startAt: this.startAt, 
+      endAt: this.endAt
+    }
 
     try {
       await firstValueFrom(this.http.put<Travels>(`${this.apiUrl}/travels/${this.travel.id}`, updatedNote, { headers }));
       loading.dismiss();
 
-      await this.presentToast(`Travel successfully updated 🚀`, 'success');
+      await this.presentToast('TRAVEL_UPDATED', 'success'); 
+
       this.dismissModal();
 
-      window.location.reload();
-    } catch (error: any) {
+      window.location.reload(); 
+      
+    } catch (error : any) {
       loading.dismiss();
       await this.presentToast(error.error, 'danger');
     }
@@ -161,7 +137,7 @@ export class ModalTravelComponent implements OnInit {
 
   closeModal() {
     this.modalCtrl.dismiss({
-      role: 'cancel',
+      role: 'cancel'
     });
   }
 
@@ -187,9 +163,11 @@ export class ModalTravelComponent implements OnInit {
       await firstValueFrom(this.http.delete(`${this.apiUrl}/travels/${this.travel.id}`, { headers }));
       loading.dismiss();
 
-      await this.presentToast(`Travel successfully deleted 🚀`, 'success');
-      window.location.reload();
-    } catch (error: any) {
+      await this.presentToast('TRAVEL_DELETED', 'success'); 
+      
+      window.location.reload(); 
+      
+    } catch (error : any) {
       loading.dismiss();
       await this.presentToast(error.error, 'danger');
     }
@@ -205,7 +183,8 @@ export class ModalTravelComponent implements OnInit {
     return loading;
   }
 
-  async presentToast(message: string, color: string = 'success') {
+  async presentToast(messageKey: string, color: string = 'success') {
+    const message = await firstValueFrom(this.translate.get(messageKey)); 
     const toast = document.createElement('ion-toast');
     toast.message = message;
     toast.color = color;
@@ -214,6 +193,54 @@ export class ModalTravelComponent implements OnInit {
 
     document.body.appendChild(toast);
     await toast.present();
+  }
+
+  async deleteComment(commentId: string) {
+    const loading = await this.showLoading();
+    
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+    });
+    
+    try {
+      await firstValueFrom(this.http.delete(`${this.apiUrl}/travels/comments/${commentId}`, { headers }));
+      loading.dismiss();
+    
+      await this.presentToast('COMMENT_DELETED', 'sucess'); 
+      this.closeModal();
+      window.location.reload(); 
+    
+    } catch (error: any) {
+      await this.presentToast('ERROR_OCCURRED', 'danger'); 
+      loading.dismiss();
+      window.location.reload(); 
+    }
+  
+  }
+
+  async postComment() {
+    const loading = await this.showLoading();
+    
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+    });
+    
+    const newComment = {
+      travelId: this.travelId,
+      comment: this.comment, 
+    };
+    
+    try {
+      await firstValueFrom(this.http.post<Commets>(`${this.apiUrl}/travels/comments`, newComment, { headers }));
+      loading.dismiss();
+    
+      await this.presentToast('COMMENT_CREATED', 'success'); 
+      window.location.reload(); 
+    
+    } catch (error: any) {
+      loading.dismiss();
+      await this.presentToast('ERROR_OCCURRED', 'danger'); 
+    }
   }
 
   switchLanguage(language: string) {

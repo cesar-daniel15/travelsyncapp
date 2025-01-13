@@ -21,7 +21,38 @@
 
     "NO_TRAVELS": "Aucun voyage disponible 😥",
     "SUCESS_GETING": "Succès à obtenir {{count}} voyages 🚀",
+    "LOCATION_DELETED": "Emplacement supprimé",
+    "LOCATION_UPDATED": "Emplacement mis à jour",
+    "LOCATION_CREATED": "Emplacement créé",
+    "Travel Locations": "Lieux de voyage",
+    "Location Name": "Nom de l'emplacement",
+    "Update": "Mettre à jour",
+    "Delete": "Supprimer",
+    "Close": "Fermer",
+    "Add Location": "Ajouter un emplacement",
+
+    "Places Visited": "Lieux Visités",
+    "Add Comment": "Ajouter un Commentaire",
+    "Type your comment here...": "Tapez votre commentaire ici...",
+    "Cancel": "Annuler",
+    "Save": "Enregistrer",
+
+    "Search Travels": "Rechercher des voyages",
+    "Historic": "Historique",
+
+    "Enter travel name": "Entrez le nom du voyage",
+    "Business": "Affaires",
+    "Leisure": "Loisir",
+    "Planned": "Prévu",
+    "Starting": "Commencer",
+    "Finished": "Terminé",
+    "Is Favorite": "Est un favori",
 
     "TRAVEL_CREATED": "Voyage créé avec succès 🚀",
-    "ERROR_OCCURRED": "Une erreur s'est produite 🙁"
+    "TRAVEL_UPDATED": "Voyage mis à jour avec succès ✏️",
+    "TRAVEL_DELETED": "Voyage supprimé avec succès 🗑️",
+    "ERROR_OCCURRED": "Une erreur s'est produite 🙁",
+
+    "COMMENT_CREATED": "Comentario creado con éxito 🚀",
+    "COMMENT_DELETED": "Comentario eliminado con éxito 🗑️"
 }

@@ -12,7 +12,7 @@
   <ion-searchbar
     [(ngModel)]="searchQuery"
     (ionInput)="filterTravels()"
-    placeholder="Search Travels"
+    placeholder="{{ 'Search Travels' | translate }}"
     class="search-bar"
     show-clear-button="focus"
   ></ion-searchbar>

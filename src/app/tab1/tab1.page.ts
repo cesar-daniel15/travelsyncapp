@@ -6,6 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { ModalController } from '@ionic/angular'; 
+import { ModalLocationComponent } from '../components/modal-location/modal-location.component';
 
 enum State {
   Planed = "Planed",
@@ -69,7 +71,7 @@ export class Tab1Page implements OnInit {
     this.getTravels(); 
   }
 
-  constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService) {}
+  constructor(private languageService: LanguageService,  private loadingCtrl: LoadingController, private http: HttpClient,  private translate: TranslateService, private modalCtrl: ModalController,  ) {}
   
   async getTravels() {
     const loading = await this.showLoading();
@@ -101,6 +103,19 @@ export class Tab1Page implements OnInit {
       await this.presentToast(error.error, 'danger');
     }
   } 
+
+  async openLocationModal(travel: Travels) {
+    const modal = await this.modalCtrl.create({
+      component: ModalLocationComponent,
+      componentProps: { travelId: travel.id}, 
+    });
+  
+    modal.onDidDismiss().then(() => {
+      this.getTravels(); 
+    });
+  
+    await modal.present();
+  }
 
   async showLoading() {
     const loading = await this.loadingCtrl.create({

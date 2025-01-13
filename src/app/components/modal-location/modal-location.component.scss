@@ -1,0 +1,57 @@
+ion-header {
+    background-color: #ffffff;
+    color: white;
+}
+
+ion-toolbar {
+    --background: #ffffff;
+}
+
+ion-content {
+    padding: 16px;
+    background-color: #f8f8f8;
+}
+
+ion-list {
+    margin-bottom: 16px;
+}
+
+ion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ion-input {
+    flex: 1;
+    margin-right: 8px;
+}
+
+ion-button {
+    margin-left: 8px;
+    border-radius: 8px;
+}
+
+ion-button[color="primary"] {
+    background-color: #007bff;
+}
+
+ion-button[color="danger"] {
+    background-color: #dc3545;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+ion-button[color="medium"] {
+    background-color: #6c757d;
+    flex: 1;
+    margin-left: 8px;
+}
+
+ion-button[color="success"] {
+    flex: 1;
+}

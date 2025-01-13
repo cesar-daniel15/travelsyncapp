@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms'; 
 
-import { ModalTravelComponent } from './modal-travel.component';
+import { ModalTravelComponent } from '../modal-travel/modal-travel.component';
 
 describe('ModalTravelComponent', () => {
   let component: ModalTravelComponent;
