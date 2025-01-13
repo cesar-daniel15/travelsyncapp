@@ -32,6 +32,7 @@ interface Travels {
   prop1: string | null;
   prop2: string | null;
   isFav: boolean;
+  comments: Commets[];
 }
 
 interface Commets{ 
@@ -85,7 +86,8 @@ export class ModalTravelComponent  implements OnInit {
       this.startAt = this.travel.startAt;
       this.endAt = this.travel.endAt;
       this.selectedType = this.travel.type; 
-      this.selectedState = this.travel.state
+      this.selectedState = this.travel.state;
+      this.comments = this.travel.comments || [];
     }
   }
 
@@ -224,7 +226,7 @@ export class ModalTravelComponent  implements OnInit {
     });
     
     const newComment = {
-      travelid: this.travelid,
+      travelId: this.travelId,
       comment: this.comment, 
     };
     
