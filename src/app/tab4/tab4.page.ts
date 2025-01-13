@@ -113,7 +113,10 @@ export class Tab4Page implements OnInit {
     const modal = await this.modalCtrl.create({
       component: ModalTravelComponent,
       backdropDismiss: false,
-      componentProps: { travel: travel }  
+      componentProps: { 
+        travel: travel,
+        travelId: travel.id 
+      }  
     });
     await modal.present();
   }

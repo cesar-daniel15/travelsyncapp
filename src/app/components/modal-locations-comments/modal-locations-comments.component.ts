@@ -56,7 +56,6 @@ export class ModalLocationsCommentsComponent implements OnInit {
     } catch (error: any) {
       await this.presentToast('ERROR_OCCURRED', 'danger'); 
       loading.dismiss();
-      window.location.reload(); 
     }
   }
 
@@ -78,8 +77,7 @@ export class ModalLocationsCommentsComponent implements OnInit {
       loading.dismiss();
 
       await this.presentToast('COMMENT_CREATED', 'success'); 
-      window.location.reload(); 
-
+      this.closeModal();
     } catch (error: any) {
       loading.dismiss();
       await this.presentToast('ERROR_OCCURRED', 'danger'); 

@@ -36,7 +36,7 @@ interface Travels {
 
 interface Commets{ 
   id: string;
-  locationId: string ,
+  travelId: string ,
   comment: string ,
 }
 
@@ -52,7 +52,7 @@ export class ModalTravelComponent  implements OnInit {
 
   travel!: Travels;
   @Input() comments: Commets[] = [];
-  @Input() traveld: string = '';
+  @Input() travelId: string = '';
   comment: string = '';
 
   type: string | null = null;
@@ -207,39 +207,39 @@ export class ModalTravelComponent  implements OnInit {
       await this.presentToast('COMMENT_DELETED', 'sucess'); 
       this.closeModal();
       window.location.reload(); 
-
+    
     } catch (error: any) {
       await this.presentToast('ERROR_OCCURRED', 'danger'); 
       loading.dismiss();
       window.location.reload(); 
     }
+  
   }
 
-    async postComment() {
-      const loading = await this.showLoading();
-  
-      const headers = new HttpHeaders({
-        Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
-      });
+  async postComment() {
+    const loading = await this.showLoading();
     
-      const newComment = {
-        locationId: this.traveld,
-        comment: this.comment, 
-      };
-      
-      try {
-  
-        await firstValueFrom(this.http.post<Commets>(`${this.apiUrl}/travels/comments`, newComment, { headers }));
-        loading.dismiss();
-  
-        await this.presentToast('COMMENT_CREATED', 'success'); 
-        window.location.reload(); 
-  
-      } catch (error: any) {
-        loading.dismiss();
-        await this.presentToast('ERROR_OCCURRED', 'danger'); 
-      }
+    const headers = new HttpHeaders({
+      Authorization: `Basic ${btoa(`${this.name}:${this.password}`)}`,
+    });
+    
+    const newComment = {
+      travelId: this.travelId,
+      comment: this.comment, 
+    };
+    
+    try {
+      await firstValueFrom(this.http.post<Commets>(`${this.apiUrl}/travels/comments`, newComment, { headers }));
+      loading.dismiss();
+    
+      await this.presentToast('COMMENT_CREATED', 'success'); 
+      window.location.reload(); 
+    
+    } catch (error: any) {
+      loading.dismiss();
+      await this.presentToast('ERROR_OCCURRED', 'danger'); 
     }
+  }
 
   switchLanguage(language: string) {
     this.languageService.setLanguage(language);
