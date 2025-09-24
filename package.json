@@ -34,6 +34,7 @@
     "@vercel/blob": "^0.27.0",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
+    "tar-fs": "^3.1.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },
@@ -44,7 +45,7 @@
     "@angular-eslint/eslint-plugin-template": "^18.0.0",
     "@angular-eslint/schematics": "^18.0.0",
     "@angular-eslint/template-parser": "^18.0.0",
-    "@angular/cli": "18.2.12",
+    "@angular/cli": "^20.3.3",
     "@angular/compiler-cli": "^18.0.0",
     "@angular/language-service": "^18.0.0",
     "@capacitor/assets": "^3.0.5",
